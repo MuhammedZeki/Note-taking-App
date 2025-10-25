@@ -1,7 +1,7 @@
 const ForgotPassword = () => {
   return (
     <div className="bg-[#2B303B] h-screen flex items-center justify-center">
-      <div className="bg-[#0E121B] sm:w-[80%] lg:w-3/4 xl:w-1/3 border border-[#232530] rounded-2xl p-12 flex flex-col gap-4">
+      <div className="bg-[#0E121B] sm:w-[80%] lg:w-3/4 xl:w-1/3 border border-[#232530] rounded-2xl p-12 m-3 flex flex-col gap-4">
         <div className="flex items-center justify-center ">
           <img src="/images/logo.svg" className="-mr-14" alt="logo" />
           <p className="text-white font-pacifico text-2xl tracking-[-0.2px]">

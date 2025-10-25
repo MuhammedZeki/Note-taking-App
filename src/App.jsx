@@ -4,11 +4,13 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
     <div>
       <Routes>
+        <Route exact path="/" element={<Home />} />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
