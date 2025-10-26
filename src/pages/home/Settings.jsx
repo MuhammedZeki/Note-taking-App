@@ -8,6 +8,7 @@ import { TbLockPassword } from "react-icons/tb";
 import { IoIosLogOut } from "react-icons/io";
 import { useState } from "react";
 import ColorTheme from "../../components/settings/ColorTheme";
+import FontTheme from "../../components/settings/FontTheme";
 
 const Settings = () => {
   const [tabs, setTabs] = useState(0);
@@ -109,6 +110,7 @@ const Settings = () => {
           </div>
           <div className="bg-[#0E121B] w-full lg:w-[55%] border-r border-r-[#232530] px-6 py-5 flex flex-col gap-4">
             {tabs === 0 && <ColorTheme />}
+            {tabs === 1 && <FontTheme />}
           </div>
           <div className="bg-[#0E121B] hidden  lg:w-[20%] lg:px-6 lg:py-5 lg:flex lg:flex-col lg:gap-4"></div>
         </div>
