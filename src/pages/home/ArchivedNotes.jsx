@@ -1,18 +1,16 @@
 import SideBar from "../../components/SideBar";
 import { IoIosSearch } from "react-icons/io";
 import { CiSettings } from "react-icons/ci";
-import { GoPlus } from "react-icons/go";
 import { FaHashtag } from "react-icons/fa";
 import { GoClock } from "react-icons/go";
 import { IoArchiveOutline } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { TiHomeOutline } from "react-icons/ti";
-import { GoTag } from "react-icons/go";
 import { useState } from "react";
 import CreateNewNoteButton from "../../components/CreateNewNoteButton";
 import CreateNewNote from "../../components/CreateNewNote";
 import { useNavigate } from "react-router-dom";
+import BottomMenuBar from "../../components/menu/BottomMenuBar";
 
 const ArchivedNotes = () => {
   const [isNewNote, setIsNewNote] = useState(false);
@@ -24,6 +22,12 @@ const ArchivedNotes = () => {
         <SideBar />
       </div>
       <div className="w-full lg:w-[80%]  bg-[#0E121B] flex flex-col">
+        <div className="flex items-center px-8 py-4 bg-[#232530] lg:hidden">
+          <img src="/images/logo.svg" className="-mr-14" alt="logo" />
+          <p className="text-white font-pacifico text-2xl tracking-[-0.2px]">
+            Notes
+          </p>
+        </div>
         <div className="flex items-center justify-between px-8 py-4 border-b border-b-[#232530]">
           <span className="text-[#E0E4EA] font-inter font-bold text-2xl tracking-[-0.5px] leading-[120%]">
             All Notes
@@ -49,16 +53,18 @@ const ArchivedNotes = () => {
           </div>
         </div>
         <div className="h-screen flex">
-          <div className="bg-[#0E121B] lg:w-[25%]  hidden border-r border-r-[#232530] lg:flex lg:flex-col lg:gap-4 lg:px-7 lg:py-5">
-            <CreateNewNoteButton
-              isNewNote={isNewNote}
-              setIsNewNote={setIsNewNote}
-            />
-            <div className="text-[#E0E4EA] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
+          <div className="bg-[#0E121B] lg:w-[25%] w-full  border-r border-r-[#232530] lg:flex lg:flex-col lg:gap-4 lg:px-7 lg:py-5">
+            <div className="hidden lg:block ">
+              <CreateNewNoteButton
+                isNewNote={isNewNote}
+                setIsNewNote={setIsNewNote}
+              />
+            </div>
+            <div className="text-[#E0E4EA] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px] px-8 py-4 lg:px-0 lg:py-0">
               All your archived notes are stored here. You can restore or delete
               them anytime.
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 px-8 py-3 lg:py-0 lg:px-0">
               <div className="flex flex-col gap-2 bg-[#232530] rounded-lg p-3">
                 <div className="text-[#E0E4EA] font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] ">
                   React Performance Optimization
@@ -152,9 +158,10 @@ const ArchivedNotes = () => {
                   </p>
                 </div>
               </div>
+              <BottomMenuBar cls={"mt-26"} />
             </div>
           </div>
-          <div className="bg-[#0E121B] w-full lg:w-[55%] border-r border-r-[#232530] px-6 py-5 flex flex-col gap-4">
+          <div className="bg-[#0E121B] hidden  lg:w-[55%] border-r border-r-[#232530] px-6 py-5 lg:flex lg:flex-col gap-4">
             {isNewNote ? (
               <CreateNewNote />
             ) : (
@@ -225,48 +232,7 @@ const ArchivedNotes = () => {
                     Cancel
                   </button>
                 </div>
-                <div className="lg:hidden mt-6 flex items-center justify-around">
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 bg-[#2B303B] rounded-sm">
-                    <TiHomeOutline className="text-[#335CFF] w-5 h-5" />
-                    <span className="text-[#335CFF] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Home
-                    </span>
-                  </div>
-                  <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-                    <IoIosSearch className="text-[#99A0AE] w-5 h-5" />
-                    <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Search
-                    </span>
-                  </div>
-                  <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-                    <IoArchiveOutline className="text-[#99A0AE] w-5 h-5" />
-                    <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Archived
-                    </span>
-                  </div>
-                  <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-                    <GoTag className="text-[#99A0AE] w-5 h-5" />
-                    <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Tags
-                    </span>
-                  </div>
-                  <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-                    <CiSettings
-                      className="text-[#99A0AE] w-6 h-6 cursor-pointer"
-                      onClick={() => navigate("/settings")}
-                    />
-                    <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Settings
-                    </span>
-                  </div>
-                </div>
+                <BottomMenuBar cls={"mt-10"} />
               </>
             )}
           </div>

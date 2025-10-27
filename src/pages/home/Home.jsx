@@ -13,6 +13,7 @@ import { useState } from "react";
 import CreateNewNote from "../../components/CreateNewNote";
 import CreateNewNoteButton from "../../components/CreateNewNoteButton";
 import { useNavigate } from "react-router-dom";
+import BottomMenuBar from "../../components/menu/BottomMenuBar";
 
 const Home = () => {
   const [isNewNote, setIsNewNote] = useState(false);
@@ -23,6 +24,12 @@ const Home = () => {
         <SideBar />
       </div>
       <div className="w-full lg:w-[80%]  bg-[#0E121B] flex flex-col">
+        <div className="flex items-center px-8 py-4 bg-[#232530] lg:hidden">
+          <img src="/images/logo.svg" className="-mr-14" alt="logo" />
+          <p className="text-white font-pacifico text-2xl tracking-[-0.2px]">
+            Notes
+          </p>
+        </div>
         <div className="flex items-center justify-between px-8 py-4 border-b border-b-[#232530]">
           <span className="text-[#E0E4EA] font-inter font-bold text-2xl tracking-[-0.5px] leading-[120%]">
             All Notes
@@ -48,12 +55,14 @@ const Home = () => {
           </div>
         </div>
         <div className="h-screen flex">
-          <div className="bg-[#0E121B] lg:w-[25%]  hidden border-r border-r-[#232530] lg:flex lg:flex-col lg:gap-4 lg:px-7 lg:py-5">
-            <CreateNewNoteButton
-              isNewNote={isNewNote}
-              setIsNewNote={setIsNewNote}
-            />
-            <div className="flex flex-col gap-4">
+          <div className="bg-[#0E121B] lg:w-[25%] w-full  border-r border-r-[#232530] lg:flex lg:flex-col lg:gap-4 lg:px-7 lg:py-5">
+            <div className="hidden lg:block">
+              <CreateNewNoteButton
+                isNewNote={isNewNote}
+                setIsNewNote={setIsNewNote}
+              />
+            </div>
+            <div className="flex flex-col gap-4 px-8 py-3 lg:py-0 lg:px-0">
               <div className="flex flex-col gap-2 bg-[#232530] rounded-lg p-3">
                 <div className="text-[#E0E4EA] font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] ">
                   React Performance Optimization
@@ -147,9 +156,10 @@ const Home = () => {
                   </p>
                 </div>
               </div>
+              <BottomMenuBar cls={"mt-22"} />
             </div>
           </div>
-          <div className="bg-[#0E121B] w-full lg:w-[55%] border-r border-r-[#232530] px-6 py-5 flex flex-col gap-4">
+          <div className="bg-[#0E121B] hidden lg:w-[55%] border-r border-r-[#232530] px-6 py-5 lg:flex lg:flex-col gap-4">
             {isNewNote ? (
               <CreateNewNote />
             ) : (
@@ -220,45 +230,7 @@ const Home = () => {
                     Cancel
                   </button>
                 </div>
-                <div className="lg:hidden mt-6 flex items-center justify-around">
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 bg-[#2B303B] rounded-sm">
-                    <TiHomeOutline className="text-[#335CFF] w-5 h-5" />
-                    <span className="text-[#335CFF] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Home
-                    </span>
-                  </div>
-                  <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-                    <IoIosSearch className="text-[#99A0AE] w-5 h-5" />
-                    <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Search
-                    </span>
-                  </div>
-                  <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-                    <IoArchiveOutline className="text-[#99A0AE] w-5 h-5" />
-                    <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Archived
-                    </span>
-                  </div>
-                  <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-                    <GoTag className="text-[#99A0AE] w-5 h-5" />
-                    <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Tags
-                    </span>
-                  </div>
-                  <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-                  <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-                    <CiSettings className="text-[#99A0AE] w-5 h-5" />
-                    <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-                      Settings
-                    </span>
-                  </div>
-                </div>
+                <BottomMenuBar cls={"mt-10"} />
               </>
             )}
           </div>

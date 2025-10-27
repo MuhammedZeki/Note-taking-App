@@ -1,7 +1,7 @@
 import { CiSettings } from "react-icons/ci";
 import { IoIosSearch } from "react-icons/io";
 import SideBar from "../../components/SideBar";
-import { GoSun } from "react-icons/go";
+import { GoSun, GoTag } from "react-icons/go";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { AiOutlineFontSize } from "react-icons/ai";
 import { TbLockPassword } from "react-icons/tb";
@@ -9,6 +9,8 @@ import { IoIosLogOut } from "react-icons/io";
 import { useState } from "react";
 import ColorTheme from "../../components/settings/ColorTheme";
 import FontTheme from "../../components/settings/FontTheme";
+import ChangePassword from "../../components/settings/ChangePassword";
+import BottomMenuBar from "../../components/menu/BottomMenuBar";
 
 const Settings = () => {
   const [tabs, setTabs] = useState(0);
@@ -111,6 +113,8 @@ const Settings = () => {
           <div className="bg-[#0E121B] w-full lg:w-[55%] border-r border-r-[#232530] px-6 py-5 flex flex-col gap-4">
             {tabs === 0 && <ColorTheme />}
             {tabs === 1 && <FontTheme />}
+            {tabs === 2 && <ChangePassword />}
+            <BottomMenuBar cls={"mt-96"} />
           </div>
           <div className="bg-[#0E121B] hidden  lg:w-[20%] lg:px-6 lg:py-5 lg:flex lg:flex-col lg:gap-4"></div>
         </div>
