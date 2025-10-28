@@ -99,6 +99,11 @@ const ColorTheme = ({ backToSettings, tabs }) => {
             } w-6 h-6`}
           ></div>
         </div>
+        <div className="flex items-center justify-start">
+          <button className="px-4 py-3 rounded-lg bg-[#335CFF] text-[#E0E4EA]">
+            Apply Changes
+          </button>
+        </div>
       </div>
     </div>
   );

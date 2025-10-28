@@ -7,7 +7,6 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import BottomMenuBar from "../menu/BottomMenuBar";
 
 const NoteDetails = ({ noteDetail: note, handleBackToList }) => {
-  console.log("details", note);
   return (
     <>
       <div
@@ -72,7 +71,7 @@ const NoteDetails = ({ noteDetail: note, handleBackToList }) => {
           Cancel
         </button>
       </div>
-      <BottomMenuBar cls={"mt-10"} />
+      <BottomMenuBar cls={"mt-2"} />
     </>
   );
 };

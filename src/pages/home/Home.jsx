@@ -65,6 +65,7 @@ const Home = () => {
   const [isSelectedId, setIsSelectedId] = useState(notesData[0]?.id || null);
   const activeNote = notesData.find((i) => i.id === isSelectedId);
   const navigate = useNavigate();
+  const isDetailViewActive = isNewNote || activeNote;
   const handleDetailNote = (id) => {
     setIsNewNote(false);
     setIsSelectedId(id);
@@ -73,7 +74,6 @@ const Home = () => {
     setIsNewNote(!isNewNote);
     setIsSelectedId(null);
   };
-  const isDetailViewActive = isNewNote || activeNote;
   const handleBackToList = () => {
     setIsNewNote(false);
     setIsSelectedId(null);
@@ -120,7 +120,10 @@ const Home = () => {
               isDetailViewActive ? "hidden " : "w-full"
             } lg:w-[25%] lg:flex overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-r-[#232530]  lg:flex-col lg:gap-4 lg:px-7 lg:py-5 relative`}
           >
-            <div className="fixed bottom-4 right-4 z-10 lg:hidden ">
+            <div
+              className="fixed bottom-15 right-4 z-10 lg:hidden cursor-pointer"
+              onClick={handleCreateNewNote}
+            >
               <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
             </div>
             <div className="flex flex-col gap-4 px-8 py-3 lg:py-0 lg:px-0 ">
