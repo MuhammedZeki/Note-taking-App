@@ -14,6 +14,17 @@ import BottomMenuBar from "../../components/menu/BottomMenuBar";
 
 const Settings = () => {
   const [tabs, setTabs] = useState(0);
+  const [selectedTabs, setSelectedTabs] = useState(null);
+
+  const handleTabs = (id) => {
+    setTabs(id);
+    setSelectedTabs(id);
+  };
+  console.log(selectedTabs);
+  const backToSettings = (id) => {
+    setTabs(id);
+    setSelectedTabs(null);
+  };
   return (
     <div className="h-screen flex">
       <div className="lg:w-[20%] lg:block hidden">
@@ -42,12 +53,16 @@ const Settings = () => {
           </div>
         </div>
         <div className="h-screen flex">
-          <div className="bg-[#0E121B] lg:w-[25%]  hidden border-r border-r-[#232530] lg:flex lg:flex-col lg:gap-4 lg:px-7 lg:py-5">
+          <div
+            className={`bg-[#0E121B] lg:w-[25%] ${
+              selectedTabs !== null ? "hidden" : "w-full"
+            }  p-5 border-r border-r-[#232530] lg:flex lg:flex-col lg:gap-4 lg:px-7 lg:py-5`}
+          >
             <button
               className={`flex items-center justify-between cursor-pointer ${
                 tabs === 0 ? "bg-[#232530]" : ""
               }  p-3 rounded-md `}
-              onClick={() => setTabs(0)}
+              onClick={() => handleTabs(0)}
             >
               <div className="flex items-center justify-start gap-4 text-[#E0E4EA] font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
                 <GoSun
@@ -63,7 +78,7 @@ const Settings = () => {
               className={`flex items-center justify-between cursor-pointer ${
                 tabs === 1 ? "bg-[#232530]" : ""
               }  p-3 rounded-md `}
-              onClick={() => setTabs(1)}
+              onClick={() => handleTabs(1)}
             >
               <div className="flex items-center justify-start gap-4 text-[#E0E4EA] font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
                 <AiOutlineFontSize
@@ -75,12 +90,11 @@ const Settings = () => {
               </div>
               <MdKeyboardArrowRight className="h-6 w-6 text-[#E0E4EA] " />
             </button>
-
             <button
               className={`flex items-center justify-between cursor-pointer ${
                 tabs === 2 ? "bg-[#232530]" : ""
               }  p-3 rounded-md `}
-              onClick={() => setTabs(2)}
+              onClick={() => handleTabs(2)}
             >
               <div className="flex items-center justify-start gap-4 text-[#E0E4EA] font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
                 <TbLockPassword
@@ -92,12 +106,12 @@ const Settings = () => {
               </div>
               <MdKeyboardArrowRight className="h-6 w-6 text-[#E0E4EA] " />
             </button>
-            <div className="border-t border-t-[#232530]"></div>
+            <div className="border-t my-2 border-t-[#232530]"></div>
             <button
               className={`flex items-center justify-between cursor-pointer ${
                 tabs === 3 ? "bg-[#232530]" : ""
               }  p-3 rounded-md `}
-              onClick={() => setTabs(3)}
+              onClick={() => handleTabs(3)}
             >
               <div className="flex items-center justify-start gap-4 text-[#E0E4EA] font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
                 <IoIosLogOut
@@ -109,12 +123,23 @@ const Settings = () => {
               </div>
               <MdKeyboardArrowRight className="h-6 w-6 text-[#E0E4EA] " />
             </button>
+            <BottomMenuBar cls={"mt-130"} />
           </div>
-          <div className="bg-[#0E121B] w-full lg:w-[55%] border-r border-r-[#232530] px-6 py-5 flex flex-col gap-4">
-            {tabs === 0 && <ColorTheme />}
-            {tabs === 1 && <FontTheme />}
-            {tabs === 2 && <ChangePassword />}
-            <BottomMenuBar cls={"mt-96"} />
+          <div
+            className={`bg-[#0E121B] ${
+              selectedTabs !== null ? "w-full" : "hidden"
+            }  lg:w-[55%] border-r border-r-[#232530] px-6 py-5 lg:flex lg:flex-col gap-4`}
+          >
+            {tabs === 0 && (
+              <ColorTheme tabs={tabs} backToSettings={backToSettings} />
+            )}
+            {tabs === 1 && (
+              <FontTheme tabs={tabs} backToSettings={backToSettings} />
+            )}
+            {tabs === 2 && (
+              <ChangePassword tabs={tabs} backToSettings={backToSettings} />
+            )}
+            <BottomMenuBar cls={"mt-80"} />
           </div>
           <div className="bg-[#0E121B] hidden  lg:w-[20%] lg:px-6 lg:py-5 lg:flex lg:flex-col lg:gap-4"></div>
         </div>

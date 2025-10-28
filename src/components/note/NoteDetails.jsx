@@ -6,11 +6,14 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import BottomMenuBar from "../menu/BottomMenuBar";
 
-const NoteDetails = ({ noteDetail: note }) => {
+const NoteDetails = ({ noteDetail: note, handleBackToList }) => {
   console.log("details", note);
   return (
     <>
-      <div className="flex items-center justify-between w-full lg:hidden">
+      <div
+        className="flex items-center justify-between w-full lg:hidden cursor-pointer"
+        onClick={() => handleBackToList()}
+      >
         <div className="flex items-center gap-1">
           <MdKeyboardArrowLeft className="text-[#CACFD8] w-6 h-6" />
           <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">

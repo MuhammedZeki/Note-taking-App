@@ -1,11 +1,8 @@
 import SideBar from "../../components/SideBar";
 import { IoIosSearch } from "react-icons/io";
 import { CiSettings } from "react-icons/ci";
-import { FaHashtag } from "react-icons/fa";
-import { GoClock } from "react-icons/go";
 import { IoArchiveOutline } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { MdKeyboardArrowLeft } from "react-icons/md";
 import { useState } from "react";
 import CreateNewNote from "../../components/CreateNewNote";
 import CreateNewNoteButton from "../../components/CreateNewNoteButton";
@@ -67,11 +64,19 @@ const Home = () => {
   const [isNewNote, setIsNewNote] = useState(false);
   const [isSelectedId, setIsSelectedId] = useState(notesData[0]?.id || null);
   const activeNote = notesData.find((i) => i.id === isSelectedId);
-  console.log(activeNote);
   const navigate = useNavigate();
   const handleDetailNote = (id) => {
     setIsNewNote(false);
     setIsSelectedId(id);
+  };
+  const handleCreateNewNote = () => {
+    setIsNewNote(!isNewNote);
+    setIsSelectedId(null);
+  };
+  const isDetailViewActive = isNewNote || activeNote;
+  const handleBackToList = () => {
+    setIsNewNote(false);
+    setIsSelectedId(null);
   };
   return (
     <div className="h-screen  flex">
@@ -110,12 +115,13 @@ const Home = () => {
           </div>
         </div>
         <div className="h-screen max-h-[90%] flex">
-          <div className="bg-[#0E121B] lg:w-[25%] w-full  overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-r-[#232530] lg:flex lg:flex-col lg:gap-4 lg:px-7 lg:py-5">
-            <div className="hidden lg:block">
-              <CreateNewNoteButton
-                isNewNote={isNewNote}
-                setIsNewNote={setIsNewNote}
-              />
+          <div
+            className={`bg-[#0E121B] ${
+              isDetailViewActive ? "hidden " : "w-full"
+            } lg:w-[25%] lg:flex overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-r-[#232530]  lg:flex-col lg:gap-4 lg:px-7 lg:py-5 relative`}
+          >
+            <div className="fixed bottom-4 right-4 z-10 lg:hidden ">
+              <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
             </div>
             <div className="flex flex-col gap-4 px-8 py-3 lg:py-0 lg:px-0 ">
               {notesData.map((i) => (
@@ -148,13 +154,22 @@ const Home = () => {
               <BottomMenuBar cls={"mt-22"} />
             </div>
           </div>
-          <div className="bg-[#0E121B] hidden lg:w-[55%]  border-r border-r-[#232530] px-6 py-5 lg:flex lg:flex-col gap-4">
+          <div
+            className={`bg-[#0E121B] ${
+              isDetailViewActive ? "w-full" : "hidden"
+            }  lg:w-[55%]  border-r border-r-[#232530] px-6 py-5 lg:flex lg:flex-col gap-4`}
+          >
             {isNewNote ? (
-              <CreateNewNote />
+              <CreateNewNote handleBackToList={handleBackToList} />
             ) : activeNote ? (
-              <NoteDetails noteDetail={activeNote} />
+              <NoteDetails
+                noteDetail={activeNote}
+                handleBackToList={handleBackToList}
+              />
             ) : (
-              "Seç"
+              <div className="text-[#99A0AE] text-center mt-20 hidden lg:block">
+                Lütfen soldan bir not seçin.
+              </div>
             )}
           </div>
           <div className="bg-[#0E121B] hidden  lg:w-[20%]  lg:px-6 lg:py-5 lg:flex lg:flex-col lg:gap-4">

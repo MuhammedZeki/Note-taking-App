@@ -11,10 +11,76 @@ import CreateNewNoteButton from "../../components/CreateNewNoteButton";
 import CreateNewNote from "../../components/CreateNewNote";
 import { useNavigate } from "react-router-dom";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
-
+import NoteDetails from "../../components/note/NoteDetails";
+const notesData = [
+  {
+    id: "n1",
+    title: "React Performance Optimization",
+    tags: ["Dev", "React"],
+    date: "29 Oct 2024",
+    content: "Key performance optimization techniques: 1. Code Splitting...",
+  },
+  {
+    id: "n2",
+    title: "Fitness Goals 2025",
+    tags: ["Fitness", "Health", "Personal"],
+    date: "22 Sep 2024",
+    content: "My fitness goals for 2025 include...",
+  },
+  {
+    id: "n3",
+    title: "Merhabalar v1",
+    tags: ["Work", "Alpha"],
+    date: "28 Oct 2024",
+    content: "Discussed new features for Project Alpha...",
+  },
+  {
+    id: "n4",
+    title: "Merhabalar v2",
+    tags: ["Work", "Alpha"],
+    date: "28 Oct 2024",
+    content: "Discussed new features for Project Alpha...",
+  },
+  {
+    id: "n5",
+    title: "Merhabalar v3",
+    tags: ["Work", "Alpha"],
+    date: "28 Oct 2024",
+    content: "Discussed new features for Project Alpha...",
+  },
+  {
+    id: "n6",
+    title: "Project Alpha Meeting Notes",
+    tags: ["Work", "Alpha"],
+    date: "28 Oct 2024",
+    content: "Discussed new features for Project Alpha...",
+  },
+  {
+    id: "n6",
+    title: "Project Alpha Meeting Notes",
+    tags: ["Work", "Alpha"],
+    date: "28 Oct 2024",
+    content: "Discussed new features for Project Alpha...",
+  },
+];
 const ArchivedNotes = () => {
   const [isNewNote, setIsNewNote] = useState(false);
+  const [isSelectedId, setIsSelectedId] = useState(notesData[0]?.id || null);
+  const activeNote = notesData.find((i) => i.id === isSelectedId);
   const navigate = useNavigate();
+  const handleDetailNote = (id) => {
+    setIsNewNote(false);
+    setIsSelectedId(id);
+  };
+  const handleCreateNewNote = () => {
+    setIsNewNote(!isNewNote);
+    setIsSelectedId(null);
+  };
+  const handleBackToList = () => {
+    setIsNewNote(false);
+    setIsSelectedId(null);
+  };
+  const isDetailViewActive = isNewNote || activeNote;
 
   return (
     <div className="h-screen flex">
@@ -52,188 +118,66 @@ const ArchivedNotes = () => {
             />
           </div>
         </div>
-        <div className="h-screen flex">
-          <div className="bg-[#0E121B] lg:w-[25%] w-full  border-r border-r-[#232530] lg:flex lg:flex-col lg:gap-4 lg:px-7 lg:py-5">
-            <div className="hidden lg:block ">
-              <CreateNewNoteButton
-                isNewNote={isNewNote}
-                setIsNewNote={setIsNewNote}
-              />
+        <div className="h-screen flex max-h-[90%]">
+          <div
+            className={`bg-[#0E121B] ${ 
+              isDetailViewActive ? "hidden " : "w-full"
+            } lg:w-[25%] lg:flex overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-r-[#232530]  lg:flex-col lg:gap-4 lg:px-7 lg:py-5`}
+          >
+            <div className="fixed bottom-4 right-4 z-10   ">
+              <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
             </div>
             <div className="text-[#E0E4EA] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px] px-8 py-4 lg:px-0 lg:py-0">
               All your archived notes are stored here. You can restore or delete
               them anytime.
             </div>
             <div className="flex flex-col gap-4 px-8 py-3 lg:py-0 lg:px-0">
-              <div className="flex flex-col gap-2 bg-[#232530] rounded-lg p-3">
-                <div className="text-[#E0E4EA] font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] ">
-                  React Performance Optimization
+              {notesData.map((i) => (
+                <div
+                  className={`flex flex-col gap-2 ${
+                    i.id === isSelectedId ? "bg-[#232530]" : ""
+                  }  rounded-lg p-3 cursor-pointer`}
+                  onClick={() => handleDetailNote(i.id)}
+                >
+                  <div className="text-[#E0E4EA] font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] ">
+                    {i.title}
+                  </div>
+                  <div className="flex items-center justify-start gap-2">
+                    {i.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div>
+                    <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
+                      {i.date}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex items-center justify-start gap-2">
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    Dev
-                  </span>
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    React
-                  </span>
-                </div>
-                <div>
-                  <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
-                    29 Oct 2024
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 bg-[#0E121B] border-b border-b-[#232530] rounded-lg p-3">
-                <div className="text-[#E0E4EA] font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] ">
-                  React Performance Optimization
-                </div>
-                <div className="flex items-center justify-start gap-2">
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    Dev
-                  </span>
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    React
-                  </span>
-                </div>
-                <div>
-                  <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
-                    29 Oct 2024
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 bg-[#0E121B] border-b border-b-[#232530] rounded-lg p-3">
-                <div className="text-[#E0E4EA] font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] ">
-                  React Performance Optimization
-                </div>
-                <div className="flex items-center justify-start gap-2">
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    Dev
-                  </span>
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    React
-                  </span>
-                </div>
-                <div>
-                  <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
-                    29 Oct 2024
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 bg-[#0E121B] border-b border-b-[#232530] rounded-lg p-3">
-                <div className="text-[#E0E4EA] font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] ">
-                  React Performance Optimization
-                </div>
-                <div className="flex items-center justify-start gap-2">
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    Dev
-                  </span>
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    React
-                  </span>
-                </div>
-                <div>
-                  <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
-                    29 Oct 2024
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 bg-[#0E121B] border-b border-b-[#232530] rounded-lg p-3">
-                <div className="text-[#E0E4EA] font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] ">
-                  Fitness Goals 2025
-                </div>
-                <div className="flex items-center justify-start gap-2">
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    Fitness
-                  </span>
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    Health
-                  </span>
-                  <span className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]">
-                    Personal
-                  </span>
-                </div>
-                <div>
-                  <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
-                    22 Sep 2024
-                  </p>
-                </div>
-              </div>
+              ))}
               <BottomMenuBar cls={"mt-26"} />
             </div>
           </div>
-          <div className="bg-[#0E121B] hidden  lg:w-[55%] border-r border-r-[#232530] px-6 py-5 lg:flex lg:flex-col gap-4">
+          <div
+            className={`bg-[#0E121B] ${
+              isDetailViewActive ? "w-full" : "hidden"
+            }  lg:w-[55%]  border-r border-r-[#232530] px-6 py-5 lg:flex lg:flex-col gap-4`}
+          >
             {isNewNote ? (
-              <CreateNewNote />
+              <CreateNewNote handleBackToList={handleBackToList} />
+            ) : activeNote ? (
+              <NoteDetails
+                noteDetail={activeNote}
+                handleBackToList={handleBackToList}
+              />
             ) : (
-              <>
-                <div className="flex items-center justify-between w-full lg:hidden">
-                  <div className="flex items-center gap-1">
-                    <MdKeyboardArrowLeft className="text-[#CACFD8] w-6 h-6" />
-                    <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
-                      Back
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-center gap-4">
-                    <RiDeleteBin5Line className="text-[#CACFD8] w-5 h-5" />
-                    <IoArchiveOutline className="text-[#CACFD8] w-5 h-5" />
-                    <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
-                      Cancel
-                    </span>
-                    <span className="text-[#335CFF] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
-                      Save Note
-                    </span>
-                  </div>
-                </div>
-                <div className="text-[#E0E4EA] font-inter font-bold text-2xl leading-[-0.5px] tracking-[120%]">
-                  React Performance Optimization
-                </div>
-                <div className="flex flex-col gap-6 text-[#CACFD8] border-b border-b-[#232530] pb-8">
-                  <div className="flex items-center gap-x-30">
-                    <div className="flex items-center gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
-                      <FaHashtag className="w-6 h-6" />
-                      <span>Tags</span>
-                    </div>
-                    <div className="flex items-center gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
-                      <span>React,Dev</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-20">
-                    <div className="flex items-center gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
-                      <GoClock className="w-6 h-6" />
-                      <span>Last edited</span>
-                    </div>
-                    <div className="flex items-center gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
-                      <span>29 Oct 2024</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full border-b border-b-[#232530]">
-                  <textarea
-                    name=""
-                    id=""
-                    rows={22}
-                    className="w-full text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px] py-2 resize-none"
-                  >
-                    Key performance optimization techniques: 1. Code Splitting -
-                    Use React.lazy() for route-based splitting - Implement
-                    dynamic imports for heavy components 2. Memoization -
-                    useMemo for expensive calculations - useCallback for
-                    function props - React.memo for component optimization 3.
-                    Virtual List Implementation - Use react-window for long
-                    lists - Implement infinite scrolling TODO: Benchmark current
-                    application and identify bottlenecks
-                  </textarea>
-                </div>
-                <div className="hidden lg:flex lg:items-center lg:gap-4 lg:pt-4">
-                  <button className="bg-[#335CFF] text-white rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
-                    Save Note
-                  </button>
-                  <button className="bg-[#232530] text-[#99A0AE] rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
-                    Cancel
-                  </button>
-                </div>
-                <BottomMenuBar cls={"mt-10"} />
-              </>
+              <div className="text-[#99A0AE] text-center mt-20 hidden lg:block">
+                Lütfen soldan bir not seçin.
+              </div>
             )}
           </div>
           <div className="bg-[#0E121B] hidden lg:w-[20%] lg:px-6 lg:py-5 lg:flex lg:flex-col lg:gap-4">

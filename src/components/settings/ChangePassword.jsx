@@ -1,14 +1,24 @@
 import { IoMdEye } from "react-icons/io";
 import { CiCircleInfo } from "react-icons/ci";
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
-const ChangePassword = () => {
+const ChangePassword = ({ backToSettings, tabs }) => {
   return (
     <div className="flex flex-col items-start gap-4">
+      <div
+        className="flex items-center -ml-2 gap-1 lg:hidden"
+        onClick={() => backToSettings(tabs)}
+      >
+        <MdKeyboardArrowLeft className="text-[#CACFD8] w-6 h-6" />
+        <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
+          Settings
+        </span>
+      </div>
       <div className="font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] text-[#E0E4EA]">
         Change Password
       </div>
       <div className="flex flex-col items-start gap-4">
-        <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-2  ">
           <label
             htmlFor="oldPassword"
             className="font-inter font-medium text-sm tracking-[120%] leading-[-0.3px] text-[#E0E4EA]"
@@ -20,7 +30,7 @@ const ChangePassword = () => {
               type="text"
               id="oldPassword"
               name="oldPassword"
-              className="border-none outline-none text-[#E0E4EA] pr-56"
+              className="border-none outline-none text-[#E0E4EA] pr-20 lg:pr-56"
             />
             <IoMdEye className="text-[#525866] h-5 w-5" />
           </div>
@@ -37,7 +47,7 @@ const ChangePassword = () => {
               type="text"
               id="newPassword"
               name="newPassword"
-              className="border-none outline-none text-[#E0E4EA] pr-56"
+              className="border-none outline-none text-[#E0E4EA] pr-20 lg:pr-56"
             />
             <IoMdEye className="text-[#525866] h-5 w-5" />
           </div>
@@ -60,7 +70,7 @@ const ChangePassword = () => {
               type="text"
               id="confirmPassword"
               name="confirmPassword"
-              className="border-none outline-none text-[#E0E4EA] pr-56"
+              className="border-none outline-none text-[#E0E4EA] pr-20 lg:pr-56"
             />
             <IoMdEye className="text-[#525866] h-5 w-5" />
           </div>

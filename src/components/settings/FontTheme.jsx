@@ -1,10 +1,20 @@
 import React, { useState } from "react";
+import { MdKeyboardArrowLeft } from "react-icons/md";
 import { RiFontSansSerif } from "react-icons/ri";
 import { RiFontSans } from "react-icons/ri";
-const FontTheme = () => {
+const FontTheme = ({ backToSettings, tabs }) => {
   const [fontTheme, setFontTheme] = useState(0);
   return (
     <div className="flex flex-col gap-4">
+      <div
+        className="flex items-center -ml-2 gap-1 lg:hidden"
+        onClick={() => backToSettings(tabs)}
+      >
+        <MdKeyboardArrowLeft className="text-[#CACFD8] w-6 h-6" />
+        <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
+          Settings
+        </span>
+      </div>
       <div className="flex flex-col gap-2">
         <p className="text-[#E0E4EA] font-inter font-semibold text-[1rem] tracking-[120%] leading-[-0.3px]">
           Font Theme
