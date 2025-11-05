@@ -62,7 +62,7 @@ const notesData = [
 ];
 const Home = () => {
   const [isNewNote, setIsNewNote] = useState(false);
-  const [isSelectedId, setIsSelectedId] = useState(notesData[0]?.id || null);
+  const [isSelectedId, setIsSelectedId] = useState(null);
   const activeNote = notesData.find((i) => i.id === isSelectedId);
   const navigate = useNavigate();
   const isDetailViewActive = isNewNote || activeNote;

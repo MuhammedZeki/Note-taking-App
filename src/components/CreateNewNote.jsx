@@ -6,6 +6,7 @@ import { IoArchiveOutline } from "react-icons/io5";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { TiHomeOutline } from "react-icons/ti";
+import BottomMenuBar from "./menu/BottomMenuBar";
 
 const CreateNewNote = ({ handleBackToList }) => {
   return (
@@ -71,45 +72,7 @@ const CreateNewNote = ({ handleBackToList }) => {
           Cancel
         </button>
       </div>
-      <div className="lg:hidden mt-6 flex items-center justify-around">
-        <div className="flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 bg-[#2B303B] rounded-sm">
-          <TiHomeOutline className="text-[#335CFF] w-5 h-5" />
-          <span className="text-[#335CFF] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-            Home
-          </span>
-        </div>
-        <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-        <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-          <IoIosSearch className="text-[#99A0AE] w-5 h-5" />
-          <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-            Search
-          </span>
-        </div>
-        <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-        <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-          <IoArchiveOutline className="text-[#99A0AE] w-5 h-5" />
-          <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-            Archived
-          </span>
-        </div>
-        <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-        <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-          <GoTag className="text-[#99A0AE] w-5 h-5" />
-          <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-            Tags
-          </span>
-        </div>
-        <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-
-        <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm">
-          <CiSettings className="text-[#99A0AE] w-5 h-5" />
-          <span className="text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]">
-            Settings
-          </span>
-        </div>
-      </div>
+      <BottomMenuBar cls={"mt-2"} />
     </div>
   );
 };

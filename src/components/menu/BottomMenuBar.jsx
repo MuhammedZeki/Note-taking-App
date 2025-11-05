@@ -11,7 +11,6 @@ const BottomMenuBar = ({ cls }) => {
   const currentPath = locaiton.pathname;
   const isHome = currentPath === "/";
   //const isSearch = currentPath === "/"
-  //const isHome = currentPath === "/"
   const isArchived = currentPath === "/archived-notes";
   const isSettings = currentPath === "/settings";
   return (
@@ -34,7 +33,7 @@ const BottomMenuBar = ({ cls }) => {
         </span>
       </div>
       <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
-      <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm cursor-pointer">
+      {/* <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm cursor-pointer">
         <IoIosSearch className="text-[#99A0AE] w-5 h-5" />
         <span
           className={` 
@@ -44,7 +43,7 @@ const BottomMenuBar = ({ cls }) => {
           Search
         </span>
       </div>
-      <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
+      <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div> */}
 
       <div
         className={`flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 ${
@@ -67,7 +66,7 @@ const BottomMenuBar = ({ cls }) => {
       </div>
       <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
 
-      <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm cursor-pointer">
+      {/* <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm cursor-pointer">
         <GoTag className="text-[#99A0AE] w-5 h-5" />
         <span
           className={` text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
@@ -75,7 +74,7 @@ const BottomMenuBar = ({ cls }) => {
           Tags
         </span>
       </div>
-      <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
+      <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div> */}
 
       <div
         className={`flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 ${

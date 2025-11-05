@@ -65,7 +65,7 @@ const notesData = [
 ];
 const ArchivedNotes = () => {
   const [isNewNote, setIsNewNote] = useState(false);
-  const [isSelectedId, setIsSelectedId] = useState(notesData[0]?.id || null);
+  const [isSelectedId, setIsSelectedId] = useState(null);
   const activeNote = notesData.find((i) => i.id === isSelectedId);
   const navigate = useNavigate();
   const handleDetailNote = (id) => {
@@ -120,11 +120,14 @@ const ArchivedNotes = () => {
         </div>
         <div className="h-screen flex max-h-[90%]">
           <div
-            className={`bg-[#0E121B] ${ 
+            className={`bg-[#0E121B] ${
               isDetailViewActive ? "hidden " : "w-full"
             } lg:w-[25%] lg:flex overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-r-[#232530]  lg:flex-col lg:gap-4 lg:px-7 lg:py-5`}
           >
-            <div className="fixed bottom-4 right-4 z-10   ">
+            <div
+              className="fixed bottom-15 right-4 z-10 lg:hidden cursor-pointer"
+              onClick={handleCreateNewNote}
+            >
               <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
             </div>
             <div className="text-[#E0E4EA] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px] px-8 py-4 lg:px-0 lg:py-0">

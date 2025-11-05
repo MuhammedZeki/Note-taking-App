@@ -1,6 +1,26 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { CiCircleInfo } from "react-icons/ci";
 import { FaGoogle } from "react-icons/fa";
 import { IoMdEye } from "react-icons/io";
+import { LuEyeClosed } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
+import { EMAIL_REGEX, PWD_REGEX } from "../../regexValid/valid";
+import { initialState } from "../../regexValid/initialState";
+
 const Login = () => {
+  const [isShow, setIsShow] = useState(false);
+  const navigate = useNavigate();
+  const {
+    register,
+    reset,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: initialState,
+    mode: "onChange",
+  });
+
   return (
     <div className="bg-[#2B303B] h-screen flex items-center justify-center">
       <div className="bg-[#0E121B] sm:w-[80%] lg:w-3/4 xl:w-1/3 border border-[#232530] rounded-2xl p-12 m-3 flex flex-col gap-4">
@@ -27,12 +47,28 @@ const Login = () => {
               Email Address
             </label>
             <input
+              {...register("email", {
+                required: {
+                  value: true,
+                  message: "Lütfen bir email adres giriniz",
+                },
+                pattern: {
+                  value: EMAIL_REGEX,
+                  message: "Lütfen geçerli bir email adresi giriniz",
+                },
+              })}
               type="text"
               id="email"
               name="email"
               placeholder="email@example.com"
               className="text-[#717784] px-4 py-3 font-inter text-sm font-medium tracking-[-0.2px] leading-1.4 border border-[#717784] rounded-sm w-full"
             />
+            {errors.email && (
+              <div className="flex text-[#df3b3b] items-center mt-2 font-inter font-normal text-sm gap-2">
+                <CiCircleInfo className="w-6 h-6 text-[#df3b3b]" />
+                {errors.email.message}
+              </div>
+            )}
           </div>
           <div className="flex flex-col items-start">
             <label
@@ -41,17 +77,52 @@ const Login = () => {
             >
               Password
               <input
-                type="text"
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "Lütfen şifrenizi giriniz!",
+                  },
+                  pattern: {
+                    value: PWD_REGEX,
+                    message:
+                      "Şifreniz 8-24 karakter uzunluğunda olmalı ve en az 1 harf, 1 rakam ve 1 özel karakter içermelidir!",
+                  },
+                })}
+                type={`${isShow ? "text" : "password"}`}
                 id="password"
                 name="password"
                 className="text-[#717784] px-4 py-3 font-inter text-sm font-medium tracking-[-0.2px] leading-1.4 border border-[#717784] rounded-sm w-full"
               />
+              {errors.password && (
+                <div className="flex text-[#df3b3b] items-center mt-2 font-inter font-normal text-sm gap-2">
+                  <CiCircleInfo className="w-6 h-6 text-[#df3b3b]" />
+                  {errors.password.message}
+                </div>
+              )}
               <div className="text-[#717784] absolute top-8 right-4 bg-[url(/images/icon-show-password.svg)] bg-cover bg-no-repeat cursor-pointer">
-                <IoMdEye className="w-6 h-6 text-[#717784]" />
+                {isShow ? (
+                  <IoMdEye
+                    className="w-6 h-6 text-[#717784]"
+                    onClick={() => setIsShow(!isShow)}
+                  />
+                ) : (
+                  <LuEyeClosed
+                    className="w-6 h-6 text-[#717784]"
+                    onClick={() => setIsShow(!isShow)}
+                  />
+                )}
               </div>
             </label>
           </div>
-          <button className="bg-[#335CFF] flex items-center justify-center px-4 py-3 text-white rounded-lg font-inter text-lg tracking-[-0.3px] font-semibold cursor-pointer">
+
+          <button
+            className={`${
+              isValid
+                ? "bg-[#335CFF] cursor-pointer"
+                : "bg-[#c6c9d6] cursor-not-allowed"
+            } flex items-center justify-center px-4 py-3 text-white rounded-lg font-inter text-lg tracking-[-0.3px] font-semibold `}
+            disabled={isValid}
+          >
             Login
           </button>
         </div>
@@ -65,14 +136,20 @@ const Login = () => {
           </button>
         </div>
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <button className="text-white font-inter font-normal text-sm tracking-[-0.2px] leading-[120%] cursor-pointer hover:underline">
+          <button
+            className="text-white font-inter font-normal text-sm tracking-[-0.2px] leading-[120%] cursor-pointer hover:underline"
+            onClick={() => navigate("/forgot-password")}
+          >
             Do you forgot password?
           </button>
           <div className="flex items-center justify-center gap-2">
             <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[-0.2px] leading-[120%]">
               No account yet?
             </span>
-            <button className="text-white cursor-pointer hover:underline">
+            <button
+              className="text-white font-inter font-normal text-sm tracking-[-0.2px] leading-[120%] cursor-pointer hover:underline"
+              onClick={() => navigate("/sign-up")}
+            >
               Sign Up
             </button>
           </div>
