@@ -7,6 +7,10 @@ import { LuEyeClosed } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { EMAIL_REGEX, PWD_REGEX } from "../../regexValid/valid";
 import { initialState } from "../../regexValid/initialState";
+import { useMutation } from "@tanstack/react-query";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [isShow, setIsShow] = useState(false);
@@ -15,12 +19,31 @@ const Login = () => {
     register,
     reset,
     getValues,
+    handleSubmit,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: initialState,
     mode: "onChange",
   });
-
+  const { isPending, mutate } = useMutation({
+    mutationFn: async ({ email, password }) => {
+      return await signInWithEmailAndPassword(auth, email, password);
+    },
+    onSuccess: (userCredential) => {
+      toast.success(`Giriş Başarılı: ${userCredential.user.email}`);
+      reset();
+      navigate("/");
+    },
+    onError: (error) => {
+      toast.error(`Giriş Başarısız: ${error.message}`);
+    },
+  });
+  const _onsubmit = () => {
+    mutate({
+      email: getValues().email,
+      password: getValues().password,
+    });
+  };
   return (
     <div className="bg-[#2B303B] h-screen flex items-center justify-center">
       <div className="bg-[#0E121B] sm:w-[80%] lg:w-3/4 xl:w-1/3 border border-[#232530] rounded-2xl p-12 m-3 flex flex-col gap-4">
@@ -38,7 +61,10 @@ const Login = () => {
             Please log in to continue
           </p>
         </div>
-        <div className="flex flex-col gap-4 mt-6">
+        <form
+          className="flex flex-col gap-4 mt-6"
+          onSubmit={handleSubmit(_onsubmit)}
+        >
           <div className="flex flex-col items-start">
             <label
               htmlFor="email"
@@ -120,12 +146,14 @@ const Login = () => {
               isValid
                 ? "bg-[#335CFF] cursor-pointer"
                 : "bg-[#c6c9d6] cursor-not-allowed"
+            } ${
+              isPending ? "opacity-70 cursor-wait" : "cursor-pointer"
             } flex items-center justify-center px-4 py-3 text-white rounded-lg font-inter text-lg tracking-[-0.3px] font-semibold `}
-            disabled={isValid}
+            disabled={!isValid}
           >
-            Login
+            {isPending ? "Logging In..." : "Login"}
           </button>
-        </div>
+        </form>
         <div className="flex flex-col gap-4 items-center border-t border-t-[#232530]">
           <span className="text-[#CACFD8] font-inter font-medium tracking-[-0.2px] text-sm leading-[130%] mt-6">
             Or log in with:
