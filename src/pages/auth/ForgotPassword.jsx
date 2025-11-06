@@ -1,7 +1,11 @@
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 const ForgotPassword = () => {
+  const navigate=useNavigate()
   return (
     <div className="bg-[#2B303B] h-screen flex items-center justify-center">
-      <div className="bg-[#0E121B] sm:w-[80%] lg:w-3/4 xl:w-1/3 border border-[#232530] rounded-2xl p-12 m-3 flex flex-col gap-4">
+      <div className="bg-[#0E121B] sm:w-[80%] lg:w-3/4 xl:w-1/3 relative border border-[#232530] rounded-2xl p-12 m-3 flex flex-col gap-4">
         <div className="flex items-center justify-center ">
           <img src="/images/logo.svg" className="-mr-14" alt="logo" />
           <p className="text-white font-pacifico text-2xl tracking-[-0.2px]">
@@ -36,6 +40,12 @@ const ForgotPassword = () => {
           <button className="bg-[#335CFF] flex items-center justify-center px-4 py-3 text-white rounded-lg font-inter text-lg tracking-[-0.3px] font-semibold cursor-pointer">
             Send Reset Link
           </button>
+        </div>
+        <div className="absolute top-5 left-5 flex items-center justify-center text-[#CACFD8] hover:text-[#eaeaeb] cursor-pointer" onClick={()=>navigate("/sign-in")}>
+          <MdKeyboardArrowLeft className=" w-6 h-6 " />
+          <span className=" font-inter font-normal  text-sm tracking-[130%]  leading-[-0.2px]">
+            Back
+          </span>
         </div>
       </div>
     </div>

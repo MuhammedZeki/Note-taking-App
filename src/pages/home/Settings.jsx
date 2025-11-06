@@ -11,20 +11,37 @@ import ColorTheme from "../../components/settings/ColorTheme";
 import FontTheme from "../../components/settings/FontTheme";
 import ChangePassword from "../../components/settings/ChangePassword";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
+import { useMutation } from "@tanstack/react-query";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
   const [tabs, setTabs] = useState(0);
   const [selectedTabs, setSelectedTabs] = useState(null);
-
+  const navigate = useNavigate();
   const handleTabs = (id) => {
     setTabs(id);
     setSelectedTabs(id);
   };
-  console.log(selectedTabs);
   const backToSettings = (id) => {
     setTabs(id);
     setSelectedTabs(null);
   };
+  const { isPending, mutate } = useMutation({
+    mutationFn: async () => {
+      await signOut(auth);
+    },
+    onSuccess: () => {
+      toast.success("Çıkış yapıldı!");
+      navigate("/sign-in");
+    },
+    onError: (err) => {
+      toast.error(`Çıkış başarısız:${err.message}`);
+    },
+  });
+
   return (
     <div className="h-screen flex">
       <div className="lg:w-[20%] lg:block hidden">
@@ -108,18 +125,14 @@ const Settings = () => {
             </button>
             <div className="border-t my-2 border-t-[#232530]"></div>
             <button
-              className={`flex items-center justify-between cursor-pointer ${
-                tabs === 3 ? "bg-[#232530]" : ""
-              }  p-3 rounded-md `}
-              onClick={() => handleTabs(3)}
+              className={`flex items-center justify-between cursor-pointer p-3 rounded-md `}
             >
-              <div className="flex items-center justify-start gap-4 text-[#E0E4EA] font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
-                <IoIosLogOut
-                  className={`h-6 w-6 ${
-                    tabs === 3 ? "text-[#335CFF]" : "text-[#E0E4EA]"
-                  }`}
-                />
-                Log out
+              <div
+                className="flex items-center justify-start gap-4 text-[#E0E4EA] font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]"
+                onClick={() => mutate()}
+              >
+                <IoIosLogOut className={`h-6 w-6 text-[#E0E4EA]`} />
+                {isPending ? "Çıkış yapılıyor..." : "Logout"}
               </div>
               <MdKeyboardArrowRight className="h-6 w-6 text-[#E0E4EA] " />
             </button>
