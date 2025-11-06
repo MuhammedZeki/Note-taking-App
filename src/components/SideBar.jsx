@@ -23,9 +23,7 @@ const SideBar = () => {
         <div className="border-b flex pb-4 flex-col gap-2 border-b-[#232530]">
           <div
             className={`flex   ${
-              isHome
-                ? "border-[#E0E4EA] bg-[#232530] rounded-lg border"
-                : "bg-[#0E121B] border"
+              isHome ? "border-[#E0E4EA] bg-[#232530] rounded-lg border" : ""
             } px-3 py-2 items-center gap-18 justify-between cursor-pointer`}
             onClick={() => navigate("/")}
           >
@@ -43,9 +41,7 @@ const SideBar = () => {
           </div>
           <div
             className={`flex   ${
-              isArchive
-                ? "border-[#E0E4EA] bg-[#232530] rounded-lg border"
-                : "bg-[#0E121B] border"
+              isArchive ? "border-[#E0E4EA] bg-[#232530] rounded-lg border" : ""
             } px-3 py-2 items-center gap-18 justify-between cursor-pointer `}
             onClick={() => navigate("/archived-notes")}
           >

@@ -9,12 +9,16 @@ import { TiHomeOutline } from "react-icons/ti";
 import BottomMenuBar from "./menu/BottomMenuBar";
 import { useForm } from "react-hook-form";
 import { initialStateForm } from "../schema/form.schema";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { auth, db } from "../firebase/firebase";
 import { toast } from "react-toastify";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-const queryClient = new QueryClient();
 const CreateNewNote = ({ handleBackToList }) => {
+  const queryClient = useQueryClient();
   const {
     register,
     getValues,
@@ -40,6 +44,7 @@ const CreateNewNote = ({ handleBackToList }) => {
       toast.success("Not başarıyla eklendi!");
       queryClient.invalidateQueries(["notes", userId]);
       reset();
+      handleBackToList();
     },
     onError: (err) => {
       toast.error(`Not eklenemedi: ${err.message}`);

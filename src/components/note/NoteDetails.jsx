@@ -7,11 +7,15 @@ import BottomMenuBar from "../menu/BottomMenuBar";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { CiCircleInfo } from "react-icons/ci";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+import { toast } from "react-toastify";
 
 const NoteDetails = ({ noteDetail: note, handleBackToList }) => {
+  const queryClient = useQueryClient();
   const {
     register,
-    getValues,
     handleSubmit,
     reset,
     formState: { errors },
@@ -23,27 +27,56 @@ const NoteDetails = ({ noteDetail: note, handleBackToList }) => {
     },
     mode: "onChange",
   });
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (updatedNote) => {
+      const noteRef = doc(db, "notes", note.id); // note id gerekli
+      await updateDoc(noteRef, {
+        ...updatedNote,
+        updatedAt: serverTimestamp(),
+      });
+    },
+    onSuccess: () => {
+      toast.success("Not başarıyla güncellendi!");
+      queryClient.invalidateQueries(["notes"]); // veriyi yeniden çek
+    },
+    onError: (err) => {
+      toast.error(`Not güncellenemedi: ${err.message}`);
+    },
+  });
+  const onSubmit = (data) => {
+    const formattedTags = data.tags
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag.length > 0);
+
+    mutate({
+      ...data,
+      tags: formattedTags,
+    });
+  };
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div
         className="flex items-center justify-between w-full lg:hidden cursor-pointer"
         onClick={() => handleBackToList()}
       >
         <div className="flex items-center gap-1">
           <MdKeyboardArrowLeft className="text-[#CACFD8] w-6 h-6" />
-          <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
-            Back
-          </span>
+          <span className="text-[#CACFD8] font-inter text-sm">Back</span>
         </div>
         <div className="flex items-center justify-center gap-4">
           <RiDeleteBin5Line className="text-[#CACFD8] w-5 h-5" />
           <IoArchiveOutline className="text-[#CACFD8] w-5 h-5" />
-          <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
-            Cancel
-          </span>
-          <span className="text-[#335CFF] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
-            Save Note
-          </span>
+          <span className="text-[#CACFD8] text-sm">Cancel</span>
+          <button
+            onClick={handleSubmit(onSubmit)}
+            disabled={isPending}
+            className={`${
+              isPending ? "opacity-50 cursor-not-allowed" : ""
+            } text-[#335CFF] font-inter font-normal text-sm`}
+          >
+            {isPending ? "Saving..." : "Save Note"}
+          </button>
         </div>
       </div>
       <input
@@ -143,15 +176,21 @@ const NoteDetails = ({ noteDetail: note, handleBackToList }) => {
         )}
       </div>
       <div className="hidden lg:flex lg:items-center lg:gap-4 lg:pt-4">
-        <button className="bg-[#335CFF] text-white rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
-          Save Note
+        <button
+          className="bg-[#335CFF] text-white rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]"
+          disabled={isPending}
+        >
+          {isPending ? "Saving..." : "Save Note"}
         </button>
-        <button className="bg-[#232530] text-[#99A0AE] rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
+        <button
+          className="bg-[#232530] text-[#99A0AE] rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]"
+          onClick={() => reset()}
+        >
           Cancel
         </button>
       </div>
       <BottomMenuBar cls={"mt-2"} />
-    </>
+    </form>
   );
 };
 

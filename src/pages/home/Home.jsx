@@ -9,13 +9,22 @@ import CreateNewNoteButton from "../../components/CreateNewNoteButton";
 import { useNavigate } from "react-router-dom";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
 import NoteDetails from "../../components/note/NoteDetails";
-import { useQuery } from "@tanstack/react-query";
-import { auth } from "../../firebase/firebase";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { fetchNotes } from "../../firebase/queries/notes";
+import { archiveNote, fetchNotes } from "../../firebase/queries/notes";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
+import { deleteDoc, doc } from "firebase/firestore";
 
 const Home = () => {
+  const queryClient = useQueryClient();
+
   const [isNewNote, setIsNewNote] = useState(false);
   const [isSelectedId, setIsSelectedId] = useState(null);
   const navigate = useNavigate();
@@ -33,7 +42,6 @@ const Home = () => {
   });
   const activeNote = notes.find((i) => i.id === isSelectedId);
   const isDetailViewActive = isNewNote || activeNote;
-  console.log(notes);
 
   const handleDetailNote = (id) => {
     setIsNewNote(false);
@@ -47,6 +55,62 @@ const Home = () => {
     setIsNewNote(false);
     setIsSelectedId(null);
   };
+  const { mutate: archiveMutate, isPending: isArchiving } = useMutation({
+    mutationFn: archiveNote,
+    onMutate: async (noteId) => {
+      await queryClient.cancelQueries(["notes", userId]);
+      const previousNotes = queryClient.getQueryData(["notes", userId]);
+
+      queryClient.setQueryData(["notes", userId], (old) => {
+        if (!old) return []; // eski veri yoksa boş array döndür
+        return old.map((note) =>
+          note.id === noteId ? { ...note, archived: true } : note
+        );
+      });
+
+      return { previousNotes };
+    },
+    onError: (err, noteId, context) => {
+      toast.error(`Arşivleme hatası: ${err.message}`);
+      queryClient.setQueryData(["notes", userId], context.previousNotes);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["notes", userId]);
+    },
+    onSuccess: () => {
+      setIsSelectedId(null);
+      setIsNewNote(false);
+      toast.success("Not arşivlendi!");
+    },
+  });
+  const { mutate: deleteMutate, isPending: isDeleting } = useMutation({
+    mutationFn: async (noteId) => {
+      const noteRef = doc(db, "notes", noteId);
+      await deleteDoc(noteRef);
+    },
+    onMutate: async (noteId) => {
+      await queryClient.cancelQueries(["notes", userId]);
+
+      const previousNotes = queryClient.getQueryData(["notes", userId]);
+
+      queryClient.setQueryData(["notes", userId], (old) => {
+        if (!old) return [];
+        return old.filter((note) => note.id !== noteId);
+      });
+
+      return { previousNotes };
+    },
+    onError: (err, noteId, context) => {
+      toast.error(`Not silinemedi: ${err.message}`);
+      if (context?.previousNotes) {
+        queryClient.setQueryData(["notes", userId], context.previousNotes);
+      }
+    },
+    onSuccess: () => {
+      toast.success("Not başarıyla silindi!");
+      queryClient.invalidateQueries(["notes", userId]);
+    },
+  });
   return (
     <div className="h-screen  flex">
       <div className="lg:w-[20%] lg:block hidden">
@@ -97,36 +161,39 @@ const Home = () => {
             </div>
             <div className="flex flex-col gap-4 px-8 py-3 lg:py-0 lg:px-0 ">
               {notes &&
-                notes.map((i) => (
-                  <div
-                    className={`flex flex-col gap-2 ${
-                      i.id === isSelectedId ? "bg-[#232530]" : ""
-                    }  rounded-lg p-3 cursor-pointer`}
-                    onClick={() => handleDetailNote(i.id)}
-                  >
-                    <div className="text-[#E0E4EA] font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] ">
-                      {i.title}
+                notes
+                  .filter((note) => !note.archived)
+                  .map((i) => (
+                    <div
+                      key={i.id}
+                      className={`flex flex-col gap-2 ${
+                        i.id === isSelectedId ? "bg-[#232530]" : ""
+                      }  rounded-lg p-3 cursor-pointer`}
+                      onClick={() => handleDetailNote(i.id)}
+                    >
+                      <div className="text-[#E0E4EA] font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] ">
+                        {i.title}
+                      </div>
+                      <div className="flex items-center justify-start gap-2">
+                        {i.tags.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div>
+                        <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
+                          {format(
+                            i.createdAt?.toDate?.() || new Date(),
+                            "dd MMM yyyy"
+                          )}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-start gap-2">
-                      {i.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div>
-                      <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
-                        {format(
-                          i.createdAt?.toDate?.() || new Date(),
-                          "dd MMM yyyy"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               <BottomMenuBar />
             </div>
           </div>
@@ -153,16 +220,34 @@ const Home = () => {
               ""
             ) : (
               <>
-                <div className="border border-[#232530] rounded-lg flex items-center gap-4 px-4 py-3">
-                  <IoArchiveOutline className="text-[#CACFD8] w-5 h-5" />
-                  <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm text-[#CACFD8]">
-                    Archive Note
+                <div
+                  onClick={() => {
+                    if (activeNote) archiveMutate(activeNote.id);
+                  }}
+                  className={`border border-[#232530] ${
+                    isArchiving
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-[#335CFF] hover:text-white"
+                  } text-[#CACFD8] rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
+                >
+                  <IoArchiveOutline className="w-5 h-5" />
+                  <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm">
+                    {isArchiving ? "Archiving..." : "Archive Note"}
                   </span>
                 </div>
-                <div className="border border-[#232530] rounded-lg flex items-center gap-4 px-4 py-3">
-                  <RiDeleteBin5Line className="text-[#CACFD8] w-5 h-5" />
-                  <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm text-[#CACFD8]">
-                    Delete Note
+                <div
+                  onClick={() => {
+                    if (activeNote) deleteMutate(activeNote.id);
+                  }}
+                  className={`border border-[#232530] ${
+                    isDeleting
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:text-white hover:bg-red-700"
+                  } text-[#CACFD8] rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
+                >
+                  <RiDeleteBin5Line className="w-5 h-5" />
+                  <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm">
+                    {isDeleting ? "Deleting..." : "Delete Note"}
                   </span>
                 </div>
               </>
