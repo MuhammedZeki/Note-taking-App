@@ -10,7 +10,7 @@ import BottomMenuBar from "./menu/BottomMenuBar";
 
 const CreateNewNote = ({ handleBackToList }) => {
   return (
-    <div>
+    <form>
       <div
         className="flex items-center justify-between w-full lg:hidden cursor-pointer"
         onClick={() => handleBackToList()}
@@ -32,20 +32,29 @@ const CreateNewNote = ({ handleBackToList }) => {
           </span>
         </div>
       </div>
-      <div className="text-[#E0E4EA] font-inter font-bold text-2xl leading-[-0.5px] tracking-[120%]">
-        Enter a title...
-      </div>
-      <div className="flex flex-col gap-6 text-[#CACFD8] border-b border-b-[#232530] pb-8">
-        <div className="flex items-center gap-x-30">
-          <div className="flex items-center gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
+      <input
+        className="text-[#CACFD8] p-1 border border-transparent outline-none 
+  font-inter font-bold text-2xl leading-[-0.5px] tracking-[120%]
+  focus:border-[#335CFF] focus:rounded-sm focus:ring-0 transition-all duration-200"
+        type="text"
+        placeholder="Enter a title..."
+      />
+
+      <div className="flex flex-col gap-6 my-2 text-[#CACFD8] border-b border-b-[#232530] pb-8">
+        <div className="flex items-center sm:gap-x-5 ">
+          <label className="flex items-center py-1 border border-transparent focus-within:border-[#335CFF] focus-within:rounded-sm focus-within:py-1 transition-all duration-200 gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
             <FaHashtag className="w-6 h-6" />
-            <span>Tags</span>
-          </div>
+            <input
+              type="text"
+              className="border-none outline-none"
+              placeholder="Enter a Tag"
+            />
+          </label>
           <div className="flex items-center gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
             <span>Add tags separated by commas (e.g. Work, Planning)</span>
           </div>
         </div>
-        <div className="flex items-center gap-20">
+        <div className="flex items-center gap-31 lg:gap-36">
           <div className="flex items-center gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
             <GoClock className="w-6 h-6" />
             <span>Last edited</span>
@@ -61,7 +70,9 @@ const CreateNewNote = ({ handleBackToList }) => {
           id=""
           rows={22}
           placeholder="Start typing your note here…"
-          className="w-full text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px] p-2 resize-none"
+          className="w-full text-[#CACFD8] font-inter font-normal text-sm tracking-[130%]
+  leading-[-0.2px] p-2 resize-none outline-none border border-transparent
+  focus:border-[#335CFF] focus:ring-0 focus:rounded-sm transition-all duration-200"
         ></textarea>
       </div>
       <div className="hidden lg:flex lg:items-center lg:gap-4 lg:pt-4">
@@ -73,7 +84,7 @@ const CreateNewNote = ({ handleBackToList }) => {
         </button>
       </div>
       <BottomMenuBar cls={"mt-2"} />
-    </div>
+    </form>
   );
 };
 

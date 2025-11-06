@@ -121,7 +121,7 @@ const Home = () => {
             } lg:w-[25%] lg:flex overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-r-[#232530]  lg:flex-col lg:gap-4 lg:px-7 lg:py-5 relative`}
           >
             <div
-              className="fixed bottom-15 right-4 z-10 lg:hidden cursor-pointer"
+              className="fixed bottom-15 right-4 z-10 lg:relative lg:bottom-0 lg:right-0 cursor-pointer"
               onClick={handleCreateNewNote}
             >
               <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
