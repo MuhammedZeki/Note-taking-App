@@ -1,6 +1,4 @@
 import { CiSettings } from "react-icons/ci";
-import { GoTag } from "react-icons/go";
-import { IoIosSearch } from "react-icons/io";
 import { IoArchiveOutline } from "react-icons/io5";
 import { TiHomeOutline } from "react-icons/ti";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,11 +8,12 @@ const BottomMenuBar = ({ cls }) => {
   const navigate = useNavigate();
   const currentPath = locaiton.pathname;
   const isHome = currentPath === "/";
-  //const isSearch = currentPath === "/"
   const isArchived = currentPath === "/archived-notes";
   const isSettings = currentPath === "/settings";
   return (
-    <div className={`lg:hidden flex items-center justify-around ${cls}`}>
+    <div
+      className={`lg:hidden fixed bottom-5 left-1/2 -translate-x-1/2 flex items-center justify-around bg-[#1C1E26] rounded-xl shadow-lg ${cls}`}
+    >
       <div
         className={`flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 ${
           isHome ? "bg-[#2B303B]" : ""

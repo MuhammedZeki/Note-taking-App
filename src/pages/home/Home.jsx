@@ -3,69 +3,38 @@ import { IoIosSearch } from "react-icons/io";
 import { CiSettings } from "react-icons/ci";
 import { IoArchiveOutline } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateNewNote from "../../components/CreateNewNote";
 import CreateNewNoteButton from "../../components/CreateNewNoteButton";
 import { useNavigate } from "react-router-dom";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
 import NoteDetails from "../../components/note/NoteDetails";
-const notesData = [
-  {
-    id: "n1",
-    title: "React Performance Optimization",
-    tags: ["Dev", "React"],
-    date: "29 Oct 2024",
-    content: "Key performance optimization techniques: 1. Code Splitting...",
-  },
-  {
-    id: "n2",
-    title: "Fitness Goals 2025",
-    tags: ["Fitness", "Health", "Personal"],
-    date: "22 Sep 2024",
-    content: "My fitness goals for 2025 include...",
-  },
-  {
-    id: "n3",
-    title: "Merhabalar v1",
-    tags: ["Work", "Alpha"],
-    date: "28 Oct 2024",
-    content: "Discussed new features for Project Alpha...",
-  },
-  {
-    id: "n4",
-    title: "Merhabalar v2",
-    tags: ["Work", "Alpha"],
-    date: "28 Oct 2024",
-    content: "Discussed new features for Project Alpha...",
-  },
-  {
-    id: "n5",
-    title: "Merhabalar v3",
-    tags: ["Work", "Alpha"],
-    date: "28 Oct 2024",
-    content: "Discussed new features for Project Alpha...",
-  },
-  {
-    id: "n6",
-    title: "Project Alpha Meeting Notes",
-    tags: ["Work", "Alpha"],
-    date: "28 Oct 2024",
-    content: "Discussed new features for Project Alpha...",
-  },
-  {
-    id: "n6",
-    title: "Project Alpha Meeting Notes",
-    tags: ["Work", "Alpha"],
-    date: "28 Oct 2024",
-    content: "Discussed new features for Project Alpha...",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { auth } from "../../firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { fetchNotes } from "../../firebase/queries/notes";
+import { format } from "date-fns";
+
 const Home = () => {
   const [isNewNote, setIsNewNote] = useState(false);
   const [isSelectedId, setIsSelectedId] = useState(null);
-  const activeNote = notesData.find((i) => i.id === isSelectedId);
   const navigate = useNavigate();
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setUserId(user ? user.uid : null);
+    });
+    return () => unsub();
+  }, []);
+  const { data: notes = [] } = useQuery({
+    queryKey: ["notes", userId],
+    queryFn: fetchNotes,
+    enabled: !!userId,
+  });
+  const activeNote = notes.find((i) => i.id === isSelectedId);
   const isDetailViewActive = isNewNote || activeNote;
+  console.log(notes);
+
   const handleDetailNote = (id) => {
     setIsNewNote(false);
     setIsSelectedId(id);
@@ -127,34 +96,38 @@ const Home = () => {
               <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
             </div>
             <div className="flex flex-col gap-4 px-8 py-3 lg:py-0 lg:px-0 ">
-              {notesData.map((i) => (
-                <div
-                  className={`flex flex-col gap-2 ${
-                    i.id === isSelectedId ? "bg-[#232530]" : ""
-                  }  rounded-lg p-3 cursor-pointer`}
-                  onClick={() => handleDetailNote(i.id)}
-                >
-                  <div className="text-[#E0E4EA] font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] ">
-                    {i.title}
+              {notes &&
+                notes.map((i) => (
+                  <div
+                    className={`flex flex-col gap-2 ${
+                      i.id === isSelectedId ? "bg-[#232530]" : ""
+                    }  rounded-lg p-3 cursor-pointer`}
+                    onClick={() => handleDetailNote(i.id)}
+                  >
+                    <div className="text-[#E0E4EA] font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] ">
+                      {i.title}
+                    </div>
+                    <div className="flex items-center justify-start gap-2">
+                      {i.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div>
+                      <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
+                        {format(
+                          i.createdAt?.toDate?.() || new Date(),
+                          "dd MMM yyyy"
+                        )}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-start gap-2">
-                    {i.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <div>
-                    <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
-                      {i.date}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              <BottomMenuBar cls={"mt-22"} />
+                ))}
+              <BottomMenuBar />
             </div>
           </div>
           <div
