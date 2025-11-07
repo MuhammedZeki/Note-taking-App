@@ -19,10 +19,12 @@ import { deleteDoc, doc } from "firebase/firestore";
 
 const Home = () => {
   const queryClient = useQueryClient();
+
   const [isNewNote, setIsNewNote] = useState(false);
   const [isSelectedId, setIsSelectedId] = useState(null);
   const navigate = useNavigate();
   const [userId, setUserId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setUserId(user ? user.uid : null);
@@ -34,8 +36,6 @@ const Home = () => {
     queryFn: fetchNotes,
     enabled: !!userId,
   });
-  const activeNote = notes.find((i) => i.id === isSelectedId);
-  const isDetailViewActive = isNewNote || activeNote;
 
   const handleDetailNote = (id) => {
     setIsNewNote(false);
@@ -105,6 +105,18 @@ const Home = () => {
       queryClient.invalidateQueries(["notes", userId]);
     },
   });
+  const filteredNotes = notes.filter(
+    (note) =>
+      note.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (note.tags &&
+        Array.isArray(note.tags) &&
+        note.tags.some((tag) =>
+          tag.toLowerCase().includes(searchTerm.toLowerCase())
+        ))
+  );
+  const activeNote = filteredNotes.find((i) => i.id === isSelectedId);
+  const isDetailViewActive = isNewNote || activeNote;
   return (
     <div className="h-screen  flex">
       <div className="lg:w-[20%] lg:block hidden">
@@ -132,7 +144,9 @@ const Home = () => {
                 id="search"
                 name="search"
                 placeholder="Search by title, content, or tags…"
-                className="text-[#99A0AE] font-inter font-normal text-sm -pt-3 border-none outline-none"
+                className="text-[#99A0AE] font-inter font-normal text-sm -pt-3 border-none outline-none bg-transparent"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </label>
             <CiSettings
@@ -154,40 +168,57 @@ const Home = () => {
               <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
             </div>
             <div className="flex flex-col gap-4 px-8 py-3 lg:py-0 lg:px-0 ">
-              {notes &&
-                notes
+              {filteredNotes && filteredNotes.length > 0 ? (
+                filteredNotes
                   .filter((note) => !note.archived)
                   .map((i) => (
                     <div
                       key={i.id}
                       className={`flex flex-col gap-2 ${
                         i.id === isSelectedId ? "bg-[#232530]" : ""
-                      }  rounded-lg p-3 cursor-pointer`}
+                      } rounded-lg p-3 cursor-pointer hover:bg-[#1a1d28] transition-colors`}
                       onClick={() => handleDetailNote(i.id)}
                     >
-                      <div className="text-[#E0E4EA] font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] ">
-                        {i.title}
+                      <div className="text-[#E0E4EA] font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] line-clamp-2">
+                        {i.title || "Untitled Note"}
                       </div>
-                      <div className="flex items-center justify-start gap-2">
-                        {i.tags.map((tag, index) => (
-                          <span
-                            key={index}
-                            className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                      <div className="flex items-center justify-start gap-2 flex-wrap">
+                        {i.tags && Array.isArray(i.tags)
+                          ? i.tags.map((tag, index) => (
+                              <span
+                                key={index}
+                                className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]"
+                              >
+                                {tag}
+                              </span>
+                            ))
+                          : null}
                       </div>
                       <div>
                         <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
                           {format(
-                            i.createdAt?.toDate?.() || new Date(),
+                            i.updatedAt?.toDate?.() ||
+                              i.createdAt?.toDate?.() ||
+                              new Date(),
                             "dd MMM yyyy"
                           )}
                         </p>
                       </div>
                     </div>
-                  ))}
+                  ))
+              ) : (
+                <div className="text-center py-8">
+                  {searchTerm ? (
+                    <div className="text-[#717784] font-inter font-normal text-sm">
+                      No notes found for "{searchTerm}"
+                    </div>
+                  ) : (
+                    <div className="text-[#717784] font-inter font-normal text-sm">
+                      No notes found
+                    </div>
+                  )}
+                </div>
+              )}
               <BottomMenuBar />
             </div>
           </div>

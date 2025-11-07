@@ -1,7 +1,6 @@
 import SideBar from "../../components/SideBar";
 import { IoIosSearch } from "react-icons/io";
 import { CiSettings } from "react-icons/ci";
-import { IoArchiveOutline } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { IoIosReturnLeft } from "react-icons/io";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
@@ -27,6 +26,7 @@ const ArchivedNotes = () => {
   const [userId, setUserId] = useState(null);
   const [isNewNote, setIsNewNote] = useState(false);
   const [isSelectedId, setIsSelectedId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -41,9 +41,6 @@ const ArchivedNotes = () => {
     enabled: !!userId,
   });
 
-  const activeNote = notes.find((i) => i.id === isSelectedId);
-  const isDetailViewActive = isNewNote || activeNote;
-
   const handleDetailNote = (id) => {
     setIsNewNote(false);
     setIsSelectedId(id);
@@ -57,7 +54,6 @@ const ArchivedNotes = () => {
     setIsSelectedId(null);
   };
 
-  // 🔹 Restore işlemi
   const { mutate: restoreMutate, isPending: isRestoring } = useMutation({
     mutationFn: restoreNote,
     onSuccess: () => {
@@ -68,7 +64,6 @@ const ArchivedNotes = () => {
     onError: (err) => toast.error("Geri alma hatası: " + err.message),
   });
 
-  // 🔹 Delete işlemi
   const { mutate: deleteMutate, isPending: isDeleting } = useMutation({
     mutationFn: deleteNote,
     onSuccess: () => {
@@ -77,7 +72,18 @@ const ArchivedNotes = () => {
     },
     onError: (err) => toast.error("Silme hatası: " + err.message),
   });
-
+  const filteredNotes = notes.filter(
+    (note) =>
+      note.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (note.tags &&
+        Array.isArray(note.tags) &&
+        note.tags.some((tag) =>
+          tag.toLowerCase().includes(searchTerm.toLowerCase())
+        ))
+  );
+  const activeNote = filteredNotes.find((i) => i.id === isSelectedId);
+  const isDetailViewActive = isNewNote || activeNote;
   return (
     <div className="h-screen flex">
       <div className="lg:w-[20%] lg:block hidden">
@@ -100,7 +106,9 @@ const ArchivedNotes = () => {
                 id="search"
                 name="search"
                 placeholder="Search by title, content, or tags…"
-                className="text-[#99A0AE] font-inter font-normal text-sm border-none outline-none"
+                className="text-[#99A0AE] font-inter font-normal text-sm -pt-3 border-none outline-none bg-transparent"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </label>
             <CiSettings
@@ -123,7 +131,7 @@ const ArchivedNotes = () => {
             ) : notes.length === 0 ? (
               <div className="text-[#99A0AE]">Hiç arşivlenmiş not yok.</div>
             ) : (
-              notes.map((i) => (
+              filteredNotes.map((i) => (
                 <div
                   key={i.id}
                   onClick={() => handleDetailNote(i.id)}

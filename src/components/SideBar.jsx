@@ -20,7 +20,6 @@ const SideBar = () => {
     queryKey: ["tags"],
     queryFn: fecthTags,
   });
-  console.log(tags);
   return (
     <div className="border-r bg-[#0E121B] pb-8 border-r-[#232530] h-screen gap-8 flex flex-col items-start px-5 py-6">
       <div className="flex items-center justify-center">

@@ -16,7 +16,7 @@ import {
   updateNote,
   deleteNote,
 } from "../../firebase/queries/notes";
-import { auth, db } from "../../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
@@ -34,7 +34,7 @@ const SelectedTag = () => {
   const [userId, setUserId] = useState(null);
   const [isNewNote, setIsNewNote] = useState(false);
 
-  const { register, handleSubmit, reset, setValue, watch } = useForm({
+  const { register, handleSubmit, reset, setValue } = useForm({
     defaultValues: {
       title: "",
       content: "",
@@ -49,7 +49,6 @@ const SelectedTag = () => {
     return () => unsub();
   }, []);
 
-  // Seçili not değiştiğinde form'u güncelle
   useEffect(() => {
     if (selectedNote) {
       setValue("title", selectedNote.title || "");
@@ -60,34 +59,29 @@ const SelectedTag = () => {
     }
   }, [selectedNote, setValue, reset]);
 
-  // Arama filtresi
   const filteredNotes = notes.filter(
     (note) =>
       note.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       note.content?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Not seçme
   const handleNoteSelect = (note) => {
     setSelectedNote(note);
     setIsNewNote(false);
   };
 
-  // Yeni not oluştur
   const handleCreateNewNote = () => {
     setIsNewNote(true);
     setSelectedNote(null);
     reset();
   };
 
-  // Listeye geri dön
   const handleBackToList = () => {
     setIsNewNote(false);
     setSelectedNote(null);
     reset();
   };
 
-  // Not güncelleme mutation'ı
   const { mutate: updateMutate, isPending: isUpdating } = useMutation({
     mutationFn: updateNote,
     onSuccess: () => {
@@ -100,7 +94,6 @@ const SelectedTag = () => {
     },
   });
 
-  // Not arşivleme mutation'ı
   const { mutate: archiveMutate, isPending: isArchiving } = useMutation({
     mutationFn: archiveNote,
     onSuccess: () => {
@@ -113,7 +106,6 @@ const SelectedTag = () => {
     },
   });
 
-  // Not silme mutation'ı
   const { mutate: deleteMutate, isPending: isDeleting } = useMutation({
     mutationFn: deleteNote,
     onSuccess: () => {
@@ -126,7 +118,6 @@ const SelectedTag = () => {
     },
   });
 
-  // Form submit (güncelleme)
   const onSubmit = (data) => {
     if (selectedNote) {
       updateMutate({
@@ -149,7 +140,6 @@ const SelectedTag = () => {
         <SideBar />
       </div>
       <div className="w-full lg:w-[80%] bg-[#0E121B] flex flex-col">
-        {/* Mobile Header */}
         <div className="flex items-center px-8 py-4 bg-[#232530] lg:hidden">
           <img src="/images/logo.svg" className="-mr-14" alt="logo" />
           <p className="text-white font-pacifico text-2xl tracking-[-0.2px]">
@@ -157,7 +147,6 @@ const SelectedTag = () => {
           </p>
         </div>
 
-        {/* Desktop Header */}
         <div className="flex items-center justify-between px-8 py-4 border-b border-b-[#232530]">
           <span className="text-[#E0E4EA] font-inter font-bold text-2xl tracking-[-0.5px] leading-[120%]">
             Notes Tagged: {name}
@@ -186,7 +175,6 @@ const SelectedTag = () => {
         </div>
 
         <div className="h-screen max-h-[90%] flex">
-          {/* Left Sidebar - Notes List */}
           <div
             className={`bg-[#0E121B] ${
               isDetailViewActive ? "hidden " : "w-full"
@@ -265,12 +253,6 @@ const SelectedTag = () => {
                           )}
                         </p>
                       </div>
-
-                      {note.content && (
-                        <p className="text-[#99A0AE] font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] line-clamp-2 mt-1">
-                          {note.content}
-                        </p>
-                      )}
                     </div>
                   ))
               )}
@@ -327,19 +309,16 @@ const SelectedTag = () => {
                   </div>
                 </div>
 
-                {/* Note Form */}
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="flex flex-col gap-4 h-full"
                 >
-                  {/* Note Title */}
                   <input
                     {...register("title")}
                     className="text-[#E0E4EA] font-inter font-bold text-2xl leading-[-0.5px] tracking-[120%] bg-transparent border-none outline-none w-full"
                     placeholder="Note Title"
                   />
 
-                  {/* Note Meta */}
                   <div className="flex flex-col gap-6 text-[#CACFD8] border-b border-b-[#232530] pb-8">
                     <div className="flex items-center gap-x-30">
                       <div className="flex items-center gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm">
@@ -372,7 +351,6 @@ const SelectedTag = () => {
                     </div>
                   </div>
 
-                  {/* Note Content */}
                   <textarea
                     {...register("content")}
                     rows={22}
@@ -380,7 +358,6 @@ const SelectedTag = () => {
                     placeholder="Start writing your note..."
                   />
 
-                  {/* Desktop Buttons */}
                   <div className="hidden lg:flex lg:items-center lg:gap-4 lg:pt-4">
                     <button
                       type="submit"
@@ -405,13 +382,11 @@ const SelectedTag = () => {
               </div>
             )}
 
-            {/* Mobile Bottom Navigation */}
             <div className="lg:hidden mt-6">
               <BottomMenuBar />
             </div>
           </div>
 
-          {/* Right Sidebar - Actions */}
           <div className="bg-[#0E121B] hidden lg:w-[20%] lg:px-6 lg:py-5 lg:flex lg:flex-col lg:gap-4">
             {selectedNote && (
               <>

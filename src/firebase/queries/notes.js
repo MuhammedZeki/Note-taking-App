@@ -13,7 +13,6 @@ export const fetchNotes = async ({ queryKey }) => {
         ...doc.data(),
     }));
 };
-
 export const archiveNote = async (noteId) => {
     const noteRef = doc(db, "notes", noteId);
     await updateDoc(noteRef, {
@@ -28,7 +27,6 @@ export const fetchArchivedNotes = async ({ queryKey }) => {
     const snap = await getDocs(q);
     return snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
-
 export const restoreNote = async (noteId) => {
     const noteRef = doc(db, "notes", noteId);
     await updateDoc(noteRef, { archived: false });
@@ -46,18 +44,15 @@ export const updateNote = async ({ noteId, updatedData }) => {
     });
 };
 
-
 export const fecthTags = async () => {
     try {
         const auth = getAuth();
         const user = auth.currentUser;
 
         if (!user) {
-            console.log("❌ Kullanıcı giriş yapmamış");
             return [];
         }
 
-        console.log("🔄 Kullanıcının tag'leri çekiliyor:", user.uid);
 
         const q = query(
             collection(db, "notes"),
@@ -67,11 +62,9 @@ export const fecthTags = async () => {
         const snapshot = await getDocs(q);
 
         if (snapshot.empty) {
-            console.log("❌ Bu kullanıcıya ait hiç note bulunamadı");
             return [];
         }
 
-        console.log(`📝 ${snapshot.docs.length} note bulundu`);
 
         const allTags = [];
 
@@ -89,7 +82,6 @@ export const fecthTags = async () => {
                         tag && typeof tag === 'string' && tag.trim() !== ''
                     );
                     allTags.push(...validTags);
-                    console.log(`✅ Array tag'ler:`, validTags);
                 } else if (typeof data.tags === 'string') {
                     let parsedTags = [];
 
@@ -100,7 +92,6 @@ export const fecthTags = async () => {
                         parsedTags = data.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
                     }
 
-                    console.log(`🔄 String tag'ler parse edildi:`, parsedTags);
                     allTags.push(...parsedTags);
                 } else {
                     console.log(`❌ Geçersiz tag formatı:`, data.tags);
@@ -110,10 +101,8 @@ export const fecthTags = async () => {
             }
         });
 
-        console.log("📊 Tüm tag'ler:", allTags);
 
         const uniqueTags = [...new Set(allTags)];
-        console.log("🎯 Benzersiz tag'ler:", uniqueTags);
 
         return uniqueTags;
     } catch (error) {
