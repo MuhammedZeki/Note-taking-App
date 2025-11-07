@@ -9,12 +9,7 @@ import CreateNewNoteButton from "../../components/CreateNewNoteButton";
 import { useNavigate } from "react-router-dom";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
 import NoteDetails from "../../components/note/NoteDetails";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { archiveNote, fetchNotes } from "../../firebase/queries/notes";
@@ -24,7 +19,6 @@ import { deleteDoc, doc } from "firebase/firestore";
 
 const Home = () => {
   const queryClient = useQueryClient();
-
   const [isNewNote, setIsNewNote] = useState(false);
   const [isSelectedId, setIsSelectedId] = useState(null);
   const navigate = useNavigate();

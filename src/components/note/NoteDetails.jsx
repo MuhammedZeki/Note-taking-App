@@ -177,7 +177,7 @@ const NoteDetails = ({ noteDetail: note, handleBackToList }) => {
       </div>
       <div className="hidden lg:flex lg:items-center lg:gap-4 lg:pt-4">
         <button
-          className="bg-[#335CFF] text-white rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]"
+          className="bg-[#335CFF] cursor-pointer text-white rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]"
           disabled={isPending}
         >
           {isPending ? "Saving..." : "Save Note"}
