@@ -1,5 +1,5 @@
 import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../fire/firebase";
 import { toast } from "react-toastify";
 
 export const deleteNoteMutation = (queryClient, userId) => ({

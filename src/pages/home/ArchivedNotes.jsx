@@ -10,7 +10,7 @@ import NoteDetails from "../../components/note/NoteDetails";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase/firebase";
+import { auth } from "../../firebase/fire/firebase";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   fetchArchivedNotes,

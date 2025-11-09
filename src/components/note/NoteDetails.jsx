@@ -11,7 +11,7 @@ import { CiCircleInfo } from "react-icons/ci";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useNoteMutations } from "../../hooks/useNoteMutations";
-import { auth } from "../../firebase/firebase";
+import { auth } from "../../firebase/fire/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";

@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { initialState } from "../../regexValid/initialState";
 import { EMAIL_REGEX, PWD_REGEX } from "../../regexValid/valid";
 import { useMutation } from "@tanstack/react-query";
-import { auth } from "../../firebase/firebase";
+import { auth } from "../../firebase/fire/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 

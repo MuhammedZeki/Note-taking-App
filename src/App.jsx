@@ -14,7 +14,6 @@ import PublicRoute from "./hooks/PublicRoute";
 
 function App() {
   useEffect(() => {
-    // Uygulama başlangıcında theme'i yükle
     const savedTheme = localStorage.getItem("theme") || "system";
     const body = document.body;
     const html = document.documentElement;
@@ -29,7 +28,6 @@ function App() {
       body.classList.add("dark");
       html.classList.add("dark");
     } else {
-      // System mode
       const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
       const isDark = systemDark.matches;
       if (isDark) {

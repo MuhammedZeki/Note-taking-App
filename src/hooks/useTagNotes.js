@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/fire/firebase";
 import { getAuth } from "firebase/auth";
 
 const fetchTagNotes = async (tagName) => {

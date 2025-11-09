@@ -16,13 +16,13 @@ import {
   updateNote,
   deleteNote,
 } from "../../firebase/queries/notes";
-import { auth } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import CreateNewNoteButton from "../../components/CreateNewNoteButton";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
+import { auth } from "../../firebase/fire/firebase";
 
 const SelectedTag = () => {
   const { name } = useParams();

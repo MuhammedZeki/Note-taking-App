@@ -13,7 +13,7 @@ import ChangePassword from "../../components/settings/ChangePassword";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
 import { useMutation } from "@tanstack/react-query";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/firebase";
+import { auth } from "../../firebase/fire/firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useFontTheme } from "../../hooks/useFontTheme";

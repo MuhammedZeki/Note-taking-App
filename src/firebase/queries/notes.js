@@ -1,5 +1,5 @@
 import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../fire/firebase";
 import { getAuth } from "firebase/auth";
 
 export const fetchNotes = async ({ queryKey }) => {

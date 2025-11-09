@@ -14,7 +14,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { auth, db } from "../firebase/firebase";
+import { auth, db } from "../firebase/fire/firebase";
 import { toast } from "react-toastify";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 const CreateNewNote = ({ handleBackToList }) => {

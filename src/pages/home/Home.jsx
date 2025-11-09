@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import BottomMenuBar from "../../components/menu/BottomMenuBar";
 import NoteDetails from "../../components/note/NoteDetails";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { auth, db } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/fire/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { archiveNote, fetchNotes } from "../../firebase/queries/notes";
 import { format } from "date-fns";

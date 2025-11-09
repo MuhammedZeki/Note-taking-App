@@ -9,7 +9,7 @@ import { EMAIL_REGEX, PWD_REGEX } from "../../regexValid/valid";
 import { initialState } from "../../regexValid/initialState";
 import { useMutation } from "@tanstack/react-query";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase";
+import { auth } from "../../firebase/fire/firebase";
 import { toast } from "react-toastify";
 
 const Login = () => {
