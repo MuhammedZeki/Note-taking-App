@@ -10,18 +10,18 @@ const ChangePassword = ({ backToSettings, tabs }) => {
         onClick={() => backToSettings(tabs)}
       >
         <MdKeyboardArrowLeft className="text-secondary w-6 h-6" />
-        <span className="text-secondary font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
+        <span className="text-secondary  font-normal text-sm tracking-[130%] leading-[-0.2px]">
           Settings
         </span>
       </div>
-      <div className="font-inter font-semibold text-lg tracking-[120%] leading-[-0.3px] text-primary">
+      <div className=" font-semibold text-lg tracking-[120%] leading-[-0.3px] text-primary">
         Change Password
       </div>
       <div className="flex flex-col items-start gap-4">
         <div className="flex flex-col gap-2  ">
           <label
             htmlFor="oldPassword"
-            className="font-inter font-medium text-sm tracking-[120%] leading-[-0.3px] text-primary"
+            className=" font-medium text-sm tracking-[120%] leading-[-0.3px] text-primary"
           >
             Old Password
           </label>
@@ -39,7 +39,7 @@ const ChangePassword = ({ backToSettings, tabs }) => {
         <div className="flex flex-col gap-2 ">
           <label
             htmlFor="newPassword"
-            className="font-inter font-medium text-sm tracking-[120%] leading-[-0.3px] text-primary"
+            className=" font-medium text-sm tracking-[120%] leading-[-0.3px] text-primary"
           >
             New Password
           </label>
@@ -55,7 +55,7 @@ const ChangePassword = ({ backToSettings, tabs }) => {
           </div>
           <div className="flex items-center gap-2 text-tertiary">
             <CiCircleInfo className="w-5 h-5" />
-            <span className="font-inter font-normal text-xs tracking-[140%] leading-[0%]">
+            <span className=" font-normal text-xs tracking-[140%] leading-[0%]">
               At least 8 characters
             </span>
           </div>
@@ -63,7 +63,7 @@ const ChangePassword = ({ backToSettings, tabs }) => {
         <div className="flex flex-col gap-2 ">
           <label
             htmlFor="confirmPassword"
-            className="font-inter font-medium text-sm tracking-[120%] leading-[-0.3px] text-primary"
+            className=" font-medium text-sm tracking-[120%] leading-[-0.3px] text-primary"
           >
             Confirm New Password
           </label>
@@ -80,7 +80,7 @@ const ChangePassword = ({ backToSettings, tabs }) => {
         </div>
       </div>
       <div className="flex items-center justify-end">
-        <button className="px-4 cursor-pointer py-3 rounded-lg bg-accent text-white font-inter font-medium text-sm">
+        <button className="px-4 cursor-pointer py-3 rounded-lg bg-accent text-white  font-medium text-sm">
           Save Password
         </button>
       </div>

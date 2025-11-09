@@ -26,7 +26,7 @@ const BottomMenuBar = ({ cls }) => {
         <span
           className={` ${
             isHome ? "text-accent" : "text-tertiary"
-          } hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
+          } hidden sm:block font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Home
         </span>
@@ -37,7 +37,7 @@ const BottomMenuBar = ({ cls }) => {
         <span
           className={` 
              text-tertiary
-          hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
+          hidden sm:block font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Search
         </span>
@@ -56,7 +56,7 @@ const BottomMenuBar = ({ cls }) => {
         <span
           className={` ${
             isArchived ? "text-accent" : "text-tertiary"
-          } hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
+          } hidden sm:block font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Archived
         </span>
@@ -66,7 +66,7 @@ const BottomMenuBar = ({ cls }) => {
       {/* <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm cursor-pointer">
         <GoTag className="text-tertiary w-5 h-5" />
         <span
-          className={` text-tertiary hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
+          className={` text-tertiary hidden sm:block font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Tags
         </span>
@@ -85,7 +85,7 @@ const BottomMenuBar = ({ cls }) => {
         <span
           className={` ${
             isSettings ? "text-accent" : "text-tertiary"
-          } hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
+          } hidden sm:block font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Settings
         </span>
