@@ -122,44 +122,44 @@ const Home = () => {
       <div className="lg:w-[20%] lg:block hidden">
         <SideBar />
       </div>
-      <div className="w-full lg:w-[80%]  bg-[#0E121B] flex flex-col">
-        <div className="flex items-center px-8 py-4 bg-[#232530] lg:hidden">
+      <div className="w-full lg:w-[80%] bg-primary flex flex-col">
+        <div className="flex items-center px-8 py-4 bg-secondary lg:hidden">
           <img src="/images/logo.svg" className="-mr-14" alt="logo" />
-          <p className="text-white font-pacifico text-2xl tracking-[-0.2px]">
+          <p className="text-primary font-pacifico text-2xl tracking-[-0.2px]">
             Notes
           </p>
         </div>
-        <div className="flex items-center justify-between px-8 py-4 border-b border-b-[#232530]">
-          <span className="text-[#E0E4EA] font-inter font-bold text-2xl tracking-[-0.5px] leading-[120%]">
+        <div className="flex items-center justify-between px-8 py-4 border-b border-dark">
+          <span className="text-primary font-inter font-bold text-2xl tracking-[-0.5px] leading-[120%]">
             All Notes
           </span>
           <div className="lg:flex lg:items-center lg:gap-6 hidden">
             <label
-              className="border rounded-lg border-[#2B303B] flex items-center px-5 py-3 gap-2"
+              className="border rounded-lg border-dark flex items-center px-5 py-3 gap-2"
               htmlFor="search"
             >
-              <IoIosSearch className="text-[#99A0AE] w-6 h-6" />
+              <IoIosSearch className="text-tertiary w-6 h-6" />
               <input
                 type="text"
                 id="search"
                 name="search"
                 placeholder="Search by title, content, or tags…"
-                className="text-[#99A0AE] font-inter font-normal text-sm -pt-3 border-none outline-none bg-transparent"
+                className="text-tertiary font-inter font-normal text-sm -pt-3 border-none outline-none bg-transparent"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </label>
             <CiSettings
-              className="text-[#99A0AE] w-6 h-6 cursor-pointer"
+              className="text-tertiary w-6 h-6 cursor-pointer"
               onClick={() => navigate("/settings")}
             />
           </div>
         </div>
         <div className="h-screen max-h-[90%] flex">
           <div
-            className={`bg-[#0E121B] ${
+            className={`bg-primary ${
               isDetailViewActive ? "hidden " : "w-full"
-            } lg:w-[25%] lg:flex overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-r-[#232530]  lg:flex-col lg:gap-4 lg:px-7 lg:py-5 relative`}
+            } lg:w-[25%] lg:flex overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-dark  lg:flex-col lg:gap-4 lg:px-7 lg:py-5 relative`}
           >
             <div
               className="fixed bottom-15 right-4 z-10 lg:relative lg:bottom-0 lg:right-0 cursor-pointer"
@@ -175,11 +175,11 @@ const Home = () => {
                     <div
                       key={i.id}
                       className={`flex flex-col gap-2 ${
-                        i.id === isSelectedId ? "bg-[#232530]" : ""
-                      } rounded-lg p-3 cursor-pointer hover:bg-[#1a1d28] transition-colors`}
+                        i.id === isSelectedId ? "bg-secondary" : ""
+                      } p-3 cursor-pointer hover:bg-secondary/50 border-b border-dark transition-colors`}
                       onClick={() => handleDetailNote(i.id)}
                     >
-                      <div className="text-[#E0E4EA] font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] line-clamp-2">
+                      <div className="text-primary font-inter font-semibold text-md tracking-[120%] leading-[-0.3px] line-clamp-2">
                         {i.title || "Untitled Note"}
                       </div>
                       <div className="flex items-center justify-start gap-2 flex-wrap">
@@ -187,7 +187,7 @@ const Home = () => {
                           ? i.tags.map((tag, index) => (
                               <span
                                 key={index}
-                                className="bg-[#525866] px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-[#E0E4EA]"
+                                className="bg-tag px-1.5 py-0.5 font-inter font-normal text-xs tracking-[120%] leading-[-0.2px] rounded-sm text-tag"
                               >
                                 {tag}
                               </span>
@@ -195,7 +195,7 @@ const Home = () => {
                           : null}
                       </div>
                       <div>
-                        <p className="text-[#CACFD8] font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
+                        <p className="text-secondary font-inter font-normal text-xs tracking-[120%] px-1.5 py-0.5 leading-[-0.2px]">
                           {format(
                             i.updatedAt?.toDate?.() ||
                               i.createdAt?.toDate?.() ||
@@ -209,11 +209,11 @@ const Home = () => {
               ) : (
                 <div className="text-center py-8">
                   {searchTerm ? (
-                    <div className="text-[#717784] font-inter font-normal text-sm">
+                    <div className="text-placeholder font-inter font-normal text-sm">
                       No notes found for "{searchTerm}"
                     </div>
                   ) : (
-                    <div className="text-[#717784] font-inter font-normal text-sm">
+                    <div className="text-placeholder font-inter font-normal text-sm">
                       No notes found
                     </div>
                   )}
@@ -223,9 +223,9 @@ const Home = () => {
             </div>
           </div>
           <div
-            className={`bg-[#0E121B] ${
+            className={`bg-primary ${
               isDetailViewActive ? "w-full" : "hidden"
-            }  lg:w-[55%]  border-r border-r-[#232530] px-6 py-5 lg:flex lg:flex-col gap-4`}
+            }  lg:w-[55%] h-screen  overflow-y-auto custom-scrollbar lg:border-r border-dark px-6 py-5 lg:flex lg:flex-col gap-4`}
           >
             {isNewNote ? (
               <CreateNewNote handleBackToList={handleBackToList} />
@@ -235,12 +235,12 @@ const Home = () => {
                 handleBackToList={handleBackToList}
               />
             ) : (
-              <div className="text-[#99A0AE] text-center mt-20 hidden lg:block">
+              <div className="text-tertiary text-center mt-20 hidden lg:block">
                 Lütfen soldan bir not seçin.
               </div>
             )}
           </div>
-          <div className="bg-[#0E121B] hidden  lg:w-[20%]  lg:px-6 lg:py-5 lg:flex lg:flex-col lg:gap-4">
+          <div className="bg-primary hidden  lg:w-[20%]  lg:px-6 lg:py-5 lg:flex lg:flex-col lg:gap-4">
             {isNewNote ? (
               ""
             ) : (
@@ -249,11 +249,11 @@ const Home = () => {
                   onClick={() => {
                     if (activeNote) archiveMutate(activeNote.id);
                   }}
-                  className={`border border-[#232530] ${
+                  className={`border border-dark ${
                     isArchiving
                       ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-[#335CFF] hover:text-white"
-                  } text-[#CACFD8] rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
+                      : "hover:bg-accent hover:text-primary"
+                  } text-secondary rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
                 >
                   <IoArchiveOutline className="w-5 h-5" />
                   <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm">
@@ -264,11 +264,11 @@ const Home = () => {
                   onClick={() => {
                     if (activeNote) deleteMutate(activeNote.id);
                   }}
-                  className={`border border-[#232530] ${
+                  className={`border border-dark ${
                     isDeleting
                       ? "opacity-50 cursor-not-allowed"
-                      : "hover:text-white hover:bg-red-700"
-                  } text-[#CACFD8] rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
+                      : "hover:text-primary hover:bg-red-700"
+                  } text-secondary rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
                 >
                   <RiDeleteBin5Line className="w-5 h-5" />
                   <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm">

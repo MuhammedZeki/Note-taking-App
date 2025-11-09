@@ -4,91 +4,87 @@ import { TiHomeOutline } from "react-icons/ti";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomMenuBar = ({ cls }) => {
-  const locaiton = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  const currentPath = locaiton.pathname;
+  const currentPath = location.pathname;
   const isHome = currentPath === "/";
   const isArchived = currentPath === "/archived-notes";
   const isSettings = currentPath === "/settings";
   return (
     <div
-      className={`lg:hidden fixed bottom-5 left-1/2 -translate-x-1/2 flex items-center justify-around bg-[#1C1E26] rounded-xl shadow-lg ${cls}`}
+      className={`lg:hidden fixed bottom-5 left-1/2 -translate-x-1/2 flex items-center justify-around bg-secondary rounded-xl shadow-lg ${cls}`}
     >
       <div
         className={`flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 ${
-          isHome ? "bg-[#2B303B]" : ""
+          isHome ? "bg-tertiary" : ""
         }  rounded-sm cursor-pointer`}
         onClick={() => navigate("/")}
       >
         <TiHomeOutline
-          className={` ${isHome ? "text-[#335CFF]" : "text-[#99A0AE]"} w-5 h-5`}
+          className={` ${isHome ? "text-accent" : "text-tertiary"} w-5 h-5`}
         />
         <span
           className={` ${
-            isHome ? "text-[#335CFF]" : "text-[#99A0AE]"
+            isHome ? "text-accent" : "text-tertiary"
           } hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Home
         </span>
       </div>
-      <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
+      <div className=" h-12 border-r border-dark hidden sm:block"></div>
       {/* <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm cursor-pointer">
-        <IoIosSearch className="text-[#99A0AE] w-5 h-5" />
+        <IoIosSearch className="text-tertiary w-5 h-5" />
         <span
           className={` 
-             text-[#99A0AE]
+             text-tertiary
           hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Search
         </span>
       </div>
-      <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div> */}
+      <div className=" h-12 border-r border-dark hidden sm:block"></div> */}
 
       <div
         className={`flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 ${
-          isArchived ? "bg-[#2B303B]" : ""
+          isArchived ? "bg-tertiary" : ""
         }  rounded-sm cursor-pointer`}
         onClick={() => navigate("/archived-notes")}
       >
         <IoArchiveOutline
-          className={` ${
-            isArchived ? "text-[#335CFF]" : "text-[#99A0AE]"
-          } w-5 h-5`}
+          className={` ${isArchived ? "text-accent" : "text-tertiary"} w-5 h-5`}
         />
         <span
           className={` ${
-            isArchived ? "text-[#335CFF]" : "text-[#99A0AE]"
+            isArchived ? "text-accent" : "text-tertiary"
           } hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Archived
         </span>
       </div>
-      <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div>
+      <div className=" h-12 border-r border-dark hidden sm:block"></div>
 
       {/* <div className="flex flex-col items-center justify-center gap-2 px-5 py-1  rounded-sm cursor-pointer">
-        <GoTag className="text-[#99A0AE] w-5 h-5" />
+        <GoTag className="text-tertiary w-5 h-5" />
         <span
-          className={` text-[#99A0AE] hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
+          className={` text-tertiary hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Tags
         </span>
       </div>
-      <div className=" h-12 border-r border-r-[#232530] hidden sm:block"></div> */}
+      <div className=" h-12 border-r border-dark hidden sm:block"></div> */}
 
       <div
         className={`flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 ${
-          isSettings ? "bg-[#2B303B]" : ""
+          isSettings ? "bg-tertiary" : ""
         }  rounded-sm cursor-pointer`}
         onClick={() => navigate("/settings")}
       >
         <CiSettings
-          className={` ${
-            isSettings ? "text-[#335CFF]" : "text-[#99A0AE]"
-          } w-5 h-5`}
+          className={` ${isSettings ? "text-accent" : "text-tertiary"} w-5 h-5`}
         />
         <span
           className={` ${
-            isSettings ? "text-[#335CFF]" : "text-[#99A0AE]"
+            isSettings ? "text-accent" : "text-tertiary"
           } hidden sm:block font-inter font-normal text-xs tracking-[120%] leading-[-0.2px]`}
         >
           Settings

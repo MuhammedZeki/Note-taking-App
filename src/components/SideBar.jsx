@@ -21,62 +21,62 @@ const SideBar = () => {
     queryFn: fecthTags,
   });
   return (
-    <div className="border-r bg-[#0E121B] pb-8 border-r-[#232530] h-screen gap-8 flex flex-col items-start px-5 py-6">
+    <div className="border-r bg-primary pb-8 border-dark h-screen gap-8 flex flex-col items-start px-5 py-6">
       <div className="flex items-center justify-center">
         <img src="/images/logo.svg" className="-mr-14" alt="logo" />
-        <p className="text-white font-pacifico text-2xl tracking-[-0.2px]">
+        <p className="text-primary font-pacifico text-2xl tracking-[-0.2px]">
           Notes
         </p>
       </div>
 
       <div className="flex flex-col gap-4 w-full">
-        <div className="border-b flex pb-4 flex-col gap-2 border-b-[#232530]">
+        <div className="border-b flex pb-4 flex-col gap-2 border-dark">
           <div
             className={`flex ${
-              isHome ? "border-[#E0E4EA] bg-[#232530] rounded-lg border" : ""
+              isHome ? "border-primary bg-secondary rounded-lg border" : ""
             } px-3 py-2 items-center justify-between cursor-pointer`}
             onClick={() => navigate("/")}
           >
             <div className="flex items-center justify-center">
               <IoMdHome
                 className={`${
-                  isHome ? "text-[#335CFF]" : "text-[#E0E4EA]"
+                  isHome ? "text-accent" : "text-primary"
                 } w-6 h-6`}
               />
-              <span className="text-[#E0E4EA] font-inter font-medium pl-1.5 text-sm">
+              <span className="text-primary font-inter font-medium pl-1.5 text-sm">
                 All Notes
               </span>
             </div>
-            <MdKeyboardArrowRight className="text-[#E0E4EA] w-6 h-6" />
+            <MdKeyboardArrowRight className="text-primary w-6 h-6" />
           </div>
 
           <div
             className={`flex ${
-              isArchive ? "border-[#E0E4EA] bg-[#232530] rounded-lg border" : ""
+              isArchive ? "border-primary bg-secondary rounded-lg border" : ""
             } px-3 py-2 items-center justify-between cursor-pointer`}
             onClick={() => navigate("/archived-notes")}
           >
             <div className="flex items-center w-full">
               <IoArchiveOutline
                 className={`${
-                  isArchive ? "text-[#335CFF]" : "text-[#E0E4EA]"
+                  isArchive ? "text-accent" : "text-primary"
                 } w-6 h-6`}
               />
-              <span className="text-[#E0E4EA] font-inter font-medium pl-1.5 text-sm">
+              <span className="text-primary font-inter font-medium pl-1.5 text-sm">
                 Archived Notes
               </span>
             </div>
-            <MdKeyboardArrowRight className="text-[#E0E4EA] w-6 h-6" />
+            <MdKeyboardArrowRight className="text-primary w-6 h-6" />
           </div>
         </div>
 
         {/* Tags */}
         <div className="flex flex-col items-start gap-4">
-          <span className="text-[#717784] font-inter font-medium text-sm">
+          <span className="text-placeholder font-inter font-medium text-sm">
             Tags
           </span>
 
-          {isLoading && <p className="text-[#99A0AE] text-sm">Yükleniyor...</p>}
+          {isLoading && <p className="text-tertiary text-sm">Yükleniyor...</p>}
           {isError && <p className="text-red-400 text-sm">Tagler alınamadı.</p>}
 
           <div className="flex flex-col items-start gap-3 overflow-y-auto max-h-[60vh] custom-scrollbar">
@@ -87,14 +87,14 @@ const SideBar = () => {
                   className="flex items-center gap-2 justify-start cursor-pointer"
                   onClick={() => navigate(`/selected-tag/${tag}`)}
                 >
-                  <CiHashtag className="text-[#E0E4EA] w-5 h-5" />
-                  <span className="text-[#E0E4EA] font-inter font-medium text-sm">
+                  <CiHashtag className="text-primary w-5 h-5" />
+                  <span className="text-primary font-inter font-medium text-sm">
                     {tag}
                   </span>
                 </div>
               ))
             ) : (
-              <p className="text-[#99A0AE] text-sm">Henüz etiketli not yok.</p>
+              <p className="text-tertiary text-sm">Henüz etiketli not yok.</p>
             )}
           </div>
         </div>

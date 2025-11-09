@@ -51,41 +51,51 @@ const CreateNewNote = ({ handleBackToList }) => {
     },
   });
   const _onsubmit = () => {
-    mutate({
-      title: getValues().title,
-      tags: getValues()
-        .tags.split(",")
-        .map((tag) => tag.trim()),
-      content: getValues().content,
-    });
+    mutate(
+      {
+        title: getValues().title,
+        tags: getValues()
+          .tags.split(",")
+          .map((tag) => tag.trim()),
+        content: getValues().content,
+      },
+      {
+        onSuccess: () => {
+          handleBackToList();
+        },
+      }
+    );
   };
   return (
     <form onSubmit={handleSubmit(_onsubmit)}>
-      <div
-        className="flex items-center justify-between w-full lg:hidden cursor-pointer"
-        onClick={() => handleBackToList()}
-      >
+      <div className="flex items-center justify-between w-full lg:hidden cursor-pointer">
         <div className="flex items-center gap-1">
-          <MdKeyboardArrowLeft className="text-[#CACFD8] w-6 h-6" />
-          <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
+          <MdKeyboardArrowLeft className="text-secondary w-6 h-6" />
+          <span
+            onClick={() => handleBackToList()}
+            className="text-secondary font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]"
+          >
             Back
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <RiDeleteBin5Line className="text-[#CACFD8] w-5 h-5" />
-          <IoArchiveOutline className="text-[#CACFD8] w-5 h-5" />
-          <span className="text-[#CACFD8] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
+          <RiDeleteBin5Line className="text-secondary w-5 h-5" />
+          <IoArchiveOutline className="text-secondary w-5 h-5" />
+          <span className="text-secondary font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
             Cancel
           </span>
-          <span className="text-[#335CFF] font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]">
+          <span
+            className="text-accent font-inter font-normal text-sm tracking-[130%] leading-[-0.2px]"
+            onClick={() => _onsubmit()}
+          >
             Save Note
           </span>
         </div>
       </div>
       <input
-        className="text-[#CACFD8] p-1 border border-transparent outline-none 
+        className="text-primary p-1 border border-transparent outline-none 
   font-inter font-bold text-2xl leading-[-0.5px] tracking-[120%]
-  focus:border-[#335CFF] focus:rounded-sm focus:ring-0 transition-all duration-200"
+  focus:border-accent focus:rounded-sm focus:ring-0 transition-all duration-200 bg-transparent"
         type="text"
         name="title"
         id="name"
@@ -108,11 +118,11 @@ const CreateNewNote = ({ handleBackToList }) => {
           {errors.title.message}
         </div>
       )}
-      <div className="flex flex-col gap-6 my-2 text-[#CACFD8] border-b border-b-[#232530] pb-8">
+      <div className="flex flex-col gap-6 my-2 text-secondary border-b border-dark pb-8">
         <div className="flex items-center sm:gap-x-5 ">
           <label
             htmlFor="tags"
-            className="flex items-center py-1 border border-transparent focus-within:border-[#335CFF] focus-within:rounded-sm focus-within:py-1 transition-all duration-200 gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm"
+            className="flex items-center py-1 border border-transparent focus-within:border-accent focus-within:rounded-sm focus-within:py-1 transition-all duration-200 gap-1 font-inter font-normal leading-[-0.2px] tracking-[130%] text-sm"
           >
             <FaHashtag className="w-6 h-6" />
             <input
@@ -125,7 +135,7 @@ const CreateNewNote = ({ handleBackToList }) => {
                   message: "En az bir tag giriniz",
                 },
               })}
-              className="border-none outline-none"
+              className="border-none outline-none bg-transparent text-secondary"
               placeholder="Enter a Tag"
             />
           </label>
@@ -150,7 +160,7 @@ const CreateNewNote = ({ handleBackToList }) => {
           </div>
         </div>
       </div>
-      <div className="w-full border-b border-b-[#232530]">
+      <div className="w-full border-b border-dark">
         <textarea
           name="content"
           id="content"
@@ -166,9 +176,9 @@ const CreateNewNote = ({ handleBackToList }) => {
           })}
           rows={22}
           placeholder="Start typing your note here…"
-          className="w-full text-[#CACFD8] font-inter font-normal text-sm tracking-[130%]
-  leading-[-0.2px] p-2 resize-none outline-none border border-transparent
-  focus:border-[#335CFF] focus:ring-0 focus:rounded-sm transition-all duration-200"
+          className="w-full text-secondary font-inter font-normal text-sm tracking-[130%]
+  leading-[-0.2px] p-2 resize-none outline-none border border-transparent bg-transparent
+  focus:border-accent focus:ring-0 focus:rounded-sm transition-all duration-200"
         ></textarea>
         {errors.content && (
           <div className="flex text-[#df3b3b] items-center mt-2 font-inter font-normal text-sm gap-2">
@@ -179,18 +189,22 @@ const CreateNewNote = ({ handleBackToList }) => {
       </div>
       <div className="hidden lg:flex lg:items-center lg:gap-4 lg:pt-4">
         <button
-          className={`bg-[#335CFF] text-white rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]  ${
+          className={`bg-accent text-white rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]  ${
             isPending ? "opacity-70 cursor-wait" : "cursor-pointer"
           }`}
           disabled={isPending}
         >
           {isPending ? "Saving..." : "Save Note"}
         </button>
-        <button className="bg-[#232530] text-[#99A0AE] rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px]">
+        <button
+          type="button"
+          onClick={handleBackToList}
+          className="bg-secondary text-tertiary rounded-lg px-4 py-3 font-inter font-medium text-sm tracking-[120%] leading-[-0.2px] cursor-pointer"
+        >
           Cancel
         </button>
       </div>
-      <BottomMenuBar cls={"mt-2"} />
+      <BottomMenuBar />
     </form>
   );
 };

@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
 import "./App.css";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -12,6 +13,35 @@ import ProtectedRoute from "./hooks/ProtectedRoute";
 import PublicRoute from "./hooks/PublicRoute";
 
 function App() {
+  useEffect(() => {
+    // Uygulama başlangıcında theme'i yükle
+    const savedTheme = localStorage.getItem("theme") || "system";
+    const body = document.body;
+    const html = document.documentElement;
+
+    body.classList.remove("dark", "light");
+    html.classList.remove("dark", "light");
+
+    if (savedTheme === "light") {
+      body.classList.add("light");
+      html.classList.add("light");
+    } else if (savedTheme === "dark") {
+      body.classList.add("dark");
+      html.classList.add("dark");
+    } else {
+      // System mode
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+      const isDark = systemDark.matches;
+      if (isDark) {
+        body.classList.add("dark");
+        html.classList.add("dark");
+      } else {
+        body.classList.add("light");
+        html.classList.add("light");
+      }
+    }
+  }, []);
+
   return (
     <div>
       <Routes>

@@ -20,7 +20,6 @@ const fetchTagNotes = async (tagName) => {
         );
         const snapshot = await getDocs(q);
         if (snapshot.empty) {
-            console.log(`❌ "${tagName}" tag'ine ait note bulunamadı`);
             return [];
         }
         const notes = snapshot.docs.map(doc => ({
@@ -34,7 +33,7 @@ const fetchTagNotes = async (tagName) => {
         });
         return notes;
     } catch (error) {
-        console.error("💥 Tag notları çekilirken hata:", error);
+        console.error(error);
         throw error;
     }
 };
