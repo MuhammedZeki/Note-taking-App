@@ -1,11 +1,10 @@
 import { IoMdHome } from "react-icons/io";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoArchiveOutline } from "react-icons/io5";
-import { CiHashtag } from "react-icons/ci";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fecthTags } from "../firebase/queries/notes";
-
+import { BiPurchaseTag } from "react-icons/bi";
 const SideBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -77,7 +76,7 @@ const SideBar = () => {
           {isLoading && <p className="text-tertiary text-sm">Yükleniyor...</p>}
           {isError && <p className="text-red-400 text-sm">Tagler alınamadı.</p>}
 
-          <div className="flex flex-col items-start gap-3 overflow-y-auto max-h-[60vh] custom-scrollbar">
+          <div className="flex flex-col items-start w-full gap-3 overflow-y-auto max-h-[60vh] custom-scrollbar">
             {!isLoading && !isError && tags?.length > 0 ? (
               tags.map((tag) => (
                 <div
@@ -85,7 +84,7 @@ const SideBar = () => {
                   className="flex items-center gap-2 justify-start cursor-pointer"
                   onClick={() => navigate(`/selected-tag/${tag}`)}
                 >
-                  <CiHashtag className="text-primary w-7 h-7" />
+                  <BiPurchaseTag className="text-primary w-7 h-7" />
                   <span className="text-primary font-inter font-medium text-sm">
                     {tag}
                   </span>
