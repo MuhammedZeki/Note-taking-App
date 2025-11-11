@@ -41,25 +41,10 @@ html {
   --tag-text: #e0e4ea;
 }
 
-.font-sans {
-  font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", "Arial",
-    "sans-serif";
-}
-
-.font-serif {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.font-mono {
-  font-family: "Monaco", "Consolas", "Courier New", "monospace";
-}
-
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
-  font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", "Arial",
-    "sans-serif";
 }
 
 .bg-primary {

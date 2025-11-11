@@ -20,7 +20,6 @@ const SideBar = () => {
     queryKey: ["tags"],
     queryFn: fecthTags,
   });
-
   return (
     <div className="border-r bg-primary pb-8 border-dark h-screen gap-8 flex flex-col items-start px-5 py-6">
       <div className="flex items-center justify-center">
@@ -40,9 +39,11 @@ const SideBar = () => {
           >
             <div className="flex items-center justify-center">
               <IoMdHome
-                className={`${isHome ? "text-accent" : "text-primary"} w-6 h-6`}
+                className={`${
+                  isHome ? "text-accent" : "text-primary"
+                } w-6 h-6`}
               />
-              <span className="text-primary  font-medium pl-1.5 text-sm">
+              <span className="text-primary font-inter font-medium pl-1.5 text-sm">
                 All Notes
               </span>
             </div>
@@ -61,7 +62,7 @@ const SideBar = () => {
                   isArchive ? "text-accent" : "text-primary"
                 } w-6 h-6`}
               />
-              <span className="text-primary  font-medium pl-1.5 text-sm">
+              <span className="text-primary font-inter font-medium pl-1.5 text-sm">
                 Archived Notes
               </span>
             </div>
@@ -71,7 +72,9 @@ const SideBar = () => {
 
         {/* Tags */}
         <div className="flex flex-col items-start gap-4">
-          <span className="text-placeholder font-medium text-sm">Tags</span>
+          <span className="text-placeholder font-inter font-medium text-sm">
+            Tags
+          </span>
 
           {isLoading && <p className="text-tertiary text-sm">Yükleniyor...</p>}
           {isError && <p className="text-red-400 text-sm">Tagler alınamadı.</p>}
@@ -85,7 +88,7 @@ const SideBar = () => {
                   onClick={() => navigate(`/selected-tag/${tag}`)}
                 >
                   <CiHashtag className="text-primary w-5 h-5" />
-                  <span className="text-primary  font-medium text-sm">
+                  <span className="text-primary font-inter font-medium text-sm">
                     {tag}
                   </span>
                 </div>

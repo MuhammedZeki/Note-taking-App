@@ -168,7 +168,7 @@ const ArchivedNotes = () => {
           <div
             className={`bg-primary ${
               isDetailViewActive ? "w-full" : "hidden"
-            } lg:w-[55%] h-screen overflow-y-auto custom-scrollbar border-r border-dark px-6 py-5 lg:flex flex-col gap-4`}
+            } lg:w-[55%] border-r border-dark px-6 py-5 lg:flex flex-col gap-4`}
           >
             {isNewNote ? (
               <CreateNewNote handleBackToList={handleBackToList} />

@@ -15,6 +15,7 @@ const ColorTheme = ({ backToSettings, tabs }) => {
     const body = document.body;
     const html = document.documentElement;
 
+    // Önce tüm theme class'larını kaldır
     body.classList.remove("dark", "light");
     html.classList.remove("dark", "light");
 
@@ -27,6 +28,7 @@ const ColorTheme = ({ backToSettings, tabs }) => {
       html.classList.add("dark");
       localStorage.setItem("theme", "dark");
     } else {
+      // System mode - sistem tercihine göre ayarla
       const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
       const isDark = systemDark.matches;
 
@@ -84,14 +86,16 @@ const ColorTheme = ({ backToSettings, tabs }) => {
         onClick={() => backToSettings(tabs)}
       >
         <MdKeyboardArrowLeft className="text-secondary w-6 h-6" />
-        <span className="text-secondary font-normal text-sm tracking-[130%]">
+        <span className="text-secondary font-inter font-normal text-sm tracking-[130%]">
           Settings
         </span>
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="text-primary font-semibold text-[1rem]">Color Theme</p>
-        <p className="text-secondary font-normal text-sm">
+        <p className="text-primary font-inter font-semibold text-[1rem]">
+          Color Theme
+        </p>
+        <p className="text-secondary font-inter font-normal text-sm">
           Choose your color theme:
         </p>
       </div>
@@ -108,10 +112,10 @@ const ColorTheme = ({ backToSettings, tabs }) => {
               <GoSun className="text-secondary w-6 h-6" />
             </div>
             <div className="flex flex-col gap-2">
-              <span className="text-primary font-medium text-sm">
+              <span className="text-primary font-inter font-medium text-sm">
                 Light Mode
               </span>
-              <span className="text-secondary font-normal text-xs">
+              <span className="text-secondary font-inter font-normal text-xs">
                 Pick a clean and classic light theme
               </span>
             </div>
@@ -134,10 +138,10 @@ const ColorTheme = ({ backToSettings, tabs }) => {
               <MdOutlineDarkMode className="text-secondary w-6 h-6" />
             </div>
             <div className="flex flex-col gap-2">
-              <span className="text-primary font-medium text-sm">
+              <span className="text-primary font-inter font-medium text-sm">
                 Dark Mode
               </span>
-              <span className="text-secondary font-normal text-xs">
+              <span className="text-secondary font-inter font-normal text-xs">
                 Select a sleek and modern dark theme
               </span>
             </div>
@@ -160,8 +164,10 @@ const ColorTheme = ({ backToSettings, tabs }) => {
               <GrSystem className="text-secondary w-6 h-6" />
             </div>
             <div className="flex flex-col gap-2">
-              <span className="text-primary font-medium text-sm">System</span>
-              <span className="text-secondary font-normal text-xs">
+              <span className="text-primary font-inter font-medium text-sm">
+                System
+              </span>
+              <span className="text-secondary font-inter font-normal text-xs">
                 Adapts to your device's theme
               </span>
             </div>
