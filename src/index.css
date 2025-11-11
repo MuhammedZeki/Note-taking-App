@@ -7,26 +7,30 @@ html {
 :root,
 .light {
   /* Light Mode Colors */
-  --bg-primary: #cacfd8;
-  --bg-secondary: #b8bfc9;
-  --bg-tertiary: #f5f6f8;
+  --bg-primary: #fff;
+  --bg-secondary: #fff;
+  --bg-bottomMenu: #fff;
+  --bg-notes: #e0e4ea;
+  --bg-tertiary: #ebf1ff;
   --bg-card: #b8bfc9;
   --text-primary: #0e121b;
   --text-secondary: #0e121b;
   --text-tertiary: #2b303b;
   --text-placeholder: #525866;
   --border-color: #8a929f;
-  --border-dark: #6b7280;
+  --border-dark: #cacfd8;
   --accent-color: #335cff;
   --accent-hover: #2b4fd9;
-  --tag-bg: #6b7280;
-  --tag-text: #e0e4ea;
+  --tag-bg: #e0e4ea;
+  --tag-text: #0e121b;
 }
 
 .dark {
   /* Dark Mode Colors */
   --bg-primary: #0e121b;
   --bg-secondary: #232530;
+  --bg-bottomMenu: #0e121b;
+  --bg-notes: #232530;
   --bg-tertiary: #2b303b;
   --bg-card: #232530;
   --text-primary: #e0e4ea;
@@ -37,8 +41,8 @@ html {
   --border-dark: #2b303b;
   --accent-color: #335cff;
   --accent-hover: #2b4fd9;
-  --tag-bg: #525866;
-  --tag-text: #e0e4ea;
+  --tag-bg: #2b303b;
+  --tag-text: white;
 }
 
 body {
@@ -50,7 +54,12 @@ body {
 .bg-primary {
   background-color: var(--bg-primary);
 }
-
+.bg-notes {
+  background-color: var(--bg-notes);
+}
+.bg-menuBar {
+  background-color: var(--bg-bottomMenu);
+}
 .bg-secondary {
   background-color: var(--bg-secondary);
 }

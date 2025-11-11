@@ -12,7 +12,7 @@ const BottomMenuBar = ({ cls }) => {
   const isSettings = currentPath === "/settings";
   return (
     <div
-      className={`lg:hidden fixed bottom-5 left-1/2 -translate-x-1/2 flex items-center justify-around bg-secondary rounded-xl shadow-lg ${cls}`}
+      className={`lg:hidden fixed bottom-0 border-t border-dark py-2 left-0 w-full  flex items-center justify-around bg-menuBar ${cls}`}
     >
       <div
         className={`flex flex-col items-center justify-center gap-2 px-5 py-2.5 sm:py-1 ${
@@ -21,7 +21,7 @@ const BottomMenuBar = ({ cls }) => {
         onClick={() => navigate("/")}
       >
         <TiHomeOutline
-          className={` ${isHome ? "text-accent" : "text-tertiary"} w-5 h-5`}
+          className={` ${isHome ? "text-accent" : "text-tertiary"} w-7 h-7`}
         />
         <span
           className={` ${
@@ -51,7 +51,7 @@ const BottomMenuBar = ({ cls }) => {
         onClick={() => navigate("/archived-notes")}
       >
         <IoArchiveOutline
-          className={` ${isArchived ? "text-accent" : "text-tertiary"} w-5 h-5`}
+          className={` ${isArchived ? "text-accent" : "text-tertiary"} w-7 h-7`}
         />
         <span
           className={` ${
@@ -80,7 +80,7 @@ const BottomMenuBar = ({ cls }) => {
         onClick={() => navigate("/settings")}
       >
         <CiSettings
-          className={` ${isSettings ? "text-accent" : "text-tertiary"} w-5 h-5`}
+          className={` ${isSettings ? "text-accent" : "text-tertiary"} w-7 h-7`}
         />
         <span
           className={` ${

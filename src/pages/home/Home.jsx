@@ -123,7 +123,7 @@ const Home = () => {
         <SideBar />
       </div>
       <div className="w-full lg:w-[80%] bg-primary flex flex-col">
-        <div className="flex items-center px-8 py-4 bg-secondary lg:hidden">
+        <div className="flex items-center px-8 py-4 bg-notes lg:hidden">
           <img src="/images/logo.svg" className="-mr-14" alt="logo" />
           <p className="text-primary font-pacifico text-2xl tracking-[-0.2px]">
             Notes
@@ -162,7 +162,7 @@ const Home = () => {
             } lg:w-[25%] lg:flex overflow-y-auto lg:grow custom-scrollbar custom-scrollbar border-r border-dark  lg:flex-col lg:gap-4 lg:px-7 lg:py-5 relative`}
           >
             <div
-              className="fixed bottom-15 right-4 z-10 lg:relative lg:bottom-0 lg:right-0 cursor-pointer"
+              className="fixed bottom-20 right-4 z-10 lg:relative lg:bottom-0 lg:right-0 cursor-pointer"
               onClick={handleCreateNewNote}
             >
               <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
@@ -253,9 +253,9 @@ const Home = () => {
                     isArchiving
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-accent hover:text-primary"
-                  } text-secondary rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
+                  }  text-secondary rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
                 >
-                  <IoArchiveOutline className="w-5 h-5" />
+                  <IoArchiveOutline className="w-7 h-7" />
                   <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm">
                     {isArchiving ? "Archiving..." : "Archive Note"}
                   </span>
@@ -270,7 +270,7 @@ const Home = () => {
                       : "hover:text-primary hover:bg-red-700"
                   } text-secondary rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
                 >
-                  <RiDeleteBin5Line className="w-5 h-5" />
+                  <RiDeleteBin5Line className="w-7 h-7" />
                   <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm">
                     {isDeleting ? "Deleting..." : "Delete Note"}
                   </span>

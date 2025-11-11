@@ -39,9 +39,7 @@ const SideBar = () => {
           >
             <div className="flex items-center justify-center">
               <IoMdHome
-                className={`${
-                  isHome ? "text-accent" : "text-primary"
-                } w-6 h-6`}
+                className={`${isHome ? "text-accent" : "text-primary"} w-6 h-6`}
               />
               <span className="text-primary font-inter font-medium pl-1.5 text-sm">
                 All Notes
@@ -87,7 +85,7 @@ const SideBar = () => {
                   className="flex items-center gap-2 justify-start cursor-pointer"
                   onClick={() => navigate(`/selected-tag/${tag}`)}
                 >
-                  <CiHashtag className="text-primary w-5 h-5" />
+                  <CiHashtag className="text-primary w-7 h-7" />
                   <span className="text-primary font-inter font-medium text-sm">
                     {tag}
                   </span>

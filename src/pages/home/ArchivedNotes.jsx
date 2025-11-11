@@ -197,7 +197,7 @@ const ArchivedNotes = () => {
                       : "hover:bg-accent hover:text-primary"
                   } text-secondary rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
                 >
-                  <IoIosReturnLeft className="w-5 h-5" />
+                  <IoIosReturnLeft className="w-7 h-7" />
                   <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm">
                     {isRestoring ? "Restoring..." : "Restore Note"}
                   </span>
@@ -212,7 +212,7 @@ const ArchivedNotes = () => {
                       : "hover:text-primary hover:bg-red-700"
                   } text-secondary rounded-lg flex items-center gap-4 px-4 py-3 cursor-pointer`}
                 >
-                  <RiDeleteBin5Line className="w-5 h-5" />
+                  <RiDeleteBin5Line className="w-7 h-7" />
                   <span className="font-inter font-medium tracking-[120%] leading-[-0.2px] text-sm">
                     {isDeleting ? "Deleting..." : "Delete Note"}
                   </span>
