@@ -8,18 +8,18 @@ Utilizes modern JavaScript (**ES6+**), **React Hook Form**, and **TanStack Query
 
 ---
 
-## 📑 İçindekiler
+## 📑 Table of Contents
 
-- [Özellikler](#özellikler)
-- [Kullanılan Teknolojiler](#kullanılan-teknolojiler)
-- [Kurulum](#kurulum)
-- [Kullanım](#kullanım)
-- [Kullanıcı Yönetimi](#kullanıcı-yönetimi)
-  - [Kayıt Ol](#kayıt-ol)
-  - [Giriş Yap](#giriş-yap)
-  - [Şifre Sıfırlama](#şifre-sıfırlama)
-- [Admin Paneli Girişi](#admin-paneli-girişi)
-- [Geliştirici](#geliştirici)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [User Management](#user-management)
+  - [Sign Up](#sign-up)
+  - [Log In](#log-in)
+  - [Password Reset](#password-reset)
+- [Admin Panel Access](#admin-panel-access)
+- [Developer](#developer)
 
 ---
 
@@ -49,16 +49,17 @@ Utilizes modern JavaScript (**ES6+**), **React Hook Form**, and **TanStack Query
 
 ---
 
-## ⚙️ Kurulum
+## ⚙️ Installation
 
-1. Bu repoyu klonlayın:
+1. Clone this repository:
 
 ```bash
 git clone https://github.com/MuhammedZeki/Note-taking-App.git
 cd Note-taking-App
 ```
 
-2. Gerekli paketleri yükleyin:
+2. Install the required packages:
+
 
 ```bash
 npm install
@@ -95,7 +96,7 @@ npm run dev
 
 ---
 
-## 🔐 Admin Panel Login
+## 🔐 Test Login
 
 To access the admin panel:
 
@@ -106,7 +107,8 @@ To access the admin panel:
 > ⚠️ These credentials are for development purposes only. Make sure to change them in production for security!
 ---
 
-## 👨‍💻 Geliştirici
+## 👨‍💻 Developer
 
 **Muhammed Zeki**  
-🔗 [GitHub Profilim](https://github.com/MuhammedZeki)
+🔗 [My GitHub Profile](https://github.com/MuhammedZeki)
+
